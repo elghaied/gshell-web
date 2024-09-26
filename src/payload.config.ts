@@ -1,6 +1,8 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-
+import { en } from 'payload/i18n/en'
+import { ar } from 'payload/i18n/ar'
+import { fr } from 'payload/i18n/fr'
 import { payloadCloudPlugin } from '@payloadcms/plugin-cloud'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
@@ -31,6 +33,10 @@ import { Header } from './Header/config'
 import { revalidateRedirects } from './hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { Page, Post } from 'src/payload-types'
+import Technologies from './collections/Technologies'
+import Projects from './collections/Projects'
+import Services from './collections/Services'
+import { Fronts } from './collections/Fronts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -48,12 +54,7 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 export default buildConfig({
   admin: {
     components: {
-      // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
-      beforeLogin: ['@/components/BeforeLogin'],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
-      beforeDashboard: ['@/components/BeforeDashboard'],
+
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -117,7 +118,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Media, Categories, Users,Technologies,Projects,Services,Fronts],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   endpoints: [
@@ -132,7 +133,7 @@ export default buildConfig({
   globals: [Header, Footer],
   plugins: [
     redirectsPlugin({
-      collections: ['pages', 'posts'],
+      collections: ['pages', 'posts','fronts'],
       overrides: {
         // @ts-expect-error
         fields: ({ defaultFields }) => {
@@ -193,4 +194,43 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
+  localization: {
+    locales: [
+      {
+        label: {
+          en:'English',
+          ar: "الإنجليزية",
+          fr : "Anglais",
+        },
+        code: 'en',
+
+      },
+      {
+        label: {
+          en: 'French',
+          ar: "الفرنسية",
+          fr : "Français",
+        },
+        code: "fr",
+      },
+      {
+        label: {
+          en: 'Arabic',
+          ar: "العربية",
+          fr : "Arabe",
+        },
+        code: 'ar',
+        rtl: true,
+      },
+    ],
+    defaultLocale: 'en',
+    fallback: true,
+  },
+  i18n: {
+    supportedLanguages: {en,ar,fr},
+    fallbackLanguage: 'en',
+
+
+
+  }
 })

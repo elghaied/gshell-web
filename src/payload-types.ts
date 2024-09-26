@@ -16,6 +16,10 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    technologies: Technology;
+    projects: Project;
+    services: Service;
+    fronts: Front;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -30,7 +34,7 @@ export interface Config {
     header: Header;
     footer: Footer;
   };
-  locale: null;
+  locale: 'en' | 'fr' | 'ar';
   user: User & {
     collection: 'users';
   };
@@ -541,6 +545,89 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "technologies".
+ */
+export interface Technology {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image: string | Media;
+  url?: string | null;
+  category: string | Category;
+  technologies?: (string | Technology)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: string;
+  title: string;
+  description: string;
+  category: string | Category;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "fronts".
+ */
+export interface Front {
+  id: string;
+  title: string;
+  welocme?: {
+    sectionTitle?: string | null;
+    title?: string | null;
+    description?: string | null;
+    buttonText?: string | null;
+  };
+  aboutus?: {
+    sectionTitle?: string | null;
+    aboutusTitle?: string | null;
+    aboutusDescription?: string | null;
+  };
+  projectsSection: {
+    sectionTitle?: string | null;
+    title: string;
+    description: string;
+  };
+  servicesSection: {
+    sectionTitle: string;
+    title: string;
+    description: string;
+  };
+  contactus: {
+    sectionTitle: string;
+    title: string;
+    description: string;
+  };
+  layout: FormBlock[];
+  meta?: {
+    title?: string | null;
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -556,6 +643,10 @@ export interface Redirect {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'fronts';
+          value: string | Front;
         } | null);
     url?: string | null;
   };
@@ -605,6 +696,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
+      } | null)
+    | ({
+        relationTo: 'technologies';
+        value: string | Technology;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: string | Service;
+      } | null)
+    | ({
+        relationTo: 'fronts';
+        value: string | Front;
       } | null)
     | ({
         relationTo: 'redirects';
