@@ -37,6 +37,7 @@ import Technologies from './collections/Technologies'
 import Projects from './collections/Projects'
 import Services from './collections/Services'
 import { Fronts } from './collections/Fronts'
+import { Socials } from './Socials/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -130,7 +131,7 @@ export default buildConfig({
       path: '/seed',
     },
   ],
-  globals: [Header, Footer],
+  globals: [Header, Footer,Socials],
   plugins: [
     redirectsPlugin({
       collections: ['pages', 'posts','fronts'],

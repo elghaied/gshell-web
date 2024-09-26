@@ -33,6 +33,7 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    socials: Social;
   };
   locale: 'en' | 'fr' | 'ar';
   user: User & {
@@ -812,6 +813,18 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "socials".
+ */
+export interface Social {
+  id: string;
+  facebook?: string | null;
+  instagram?: string | null;
+  linkedin?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
