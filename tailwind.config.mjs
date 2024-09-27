@@ -89,11 +89,11 @@ export default {
         success: 'hsl(var(--success))',
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
+        venetian: '#D80D0D'
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)'],
-      },
+        sans: ['Inter', 'sans-serif'],      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
