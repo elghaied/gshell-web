@@ -15,11 +15,11 @@ type NavItemType = {
 
 export const HeaderNav: React.FC<{ header: HeaderType;  }> = ({ header }) => {
   const navItems = header?.navItems || []
-  const locale = useLocale()
-  const isRTL = locale === 'ar'
+
+
 
   return (
-    <nav className={`flex gap-10 items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+    <nav className={`flex gap-10 items-center `}>
       {navItems.map(({ link }: NavItemType, i: number) => {
         return (
           <Link

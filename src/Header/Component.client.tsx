@@ -2,7 +2,7 @@
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import type { Header } from '@/payload-types'
 
@@ -12,28 +12,23 @@ import LanguageSwitcher from './LanguagesSwitcher'
 
 interface HeaderClientProps {
   header: Header
- }
+  locale: string
+}
 
-export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
-  /* Storing the value in a useState to avoid hydration errors */
-  const [theme, setTheme] = useState<string | null>(null)
+export const HeaderClient: React.FC<HeaderClientProps> = ({ header, locale }) => {
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
+  const isRTL = locale === 'ar'
 
   useEffect(() => {
     setHeaderTheme(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
-
-  useEffect(() => {
-    if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [headerTheme])
+  }, [pathname, setHeaderTheme])
 
   return (
     <header
       className="container relative z-20 py-8 flex justify-between"
-      {...(theme ? { 'data-theme': theme } : {})}
+      dir={isRTL ? 'rtl' : 'ltr'}
+      {...(headerTheme ? { 'data-theme': headerTheme } : {})}
     >
       <Link href="/" className='flex items-center'>
         <Logo />

@@ -1,48 +1,47 @@
 'use client'
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useTheme } from '..'
+import { Moon, Sun } from 'lucide-react'
+
+import { themeLocalStorageKey } from './types'
 
 import type { Theme } from './types'
-
-import { useTheme } from '..'
-import { themeLocalStorageKey } from './types'
+import { useTranslations } from 'next-intl'
+import { useHeaderTheme } from '@/providers/HeaderTheme'
 
 export const ThemeSelector: React.FC = () => {
   const { setTheme } = useTheme()
-  const [value, setValue] = useState('')
+  const { setHeaderTheme } = useHeaderTheme()
+  const [currentTheme, setCurrentTheme] = useState<Theme>('light')
+  const t = useTranslations('Footer')
 
-  const onThemeChange = (themeToSet: Theme & 'auto') => {
-    if (themeToSet === 'auto') {
-      setTheme(null)
-      setValue('auto')
-    } else {
-      setTheme(themeToSet)
-      setValue(themeToSet)
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem(themeLocalStorageKey) as Theme | null
+    if (savedTheme) {
+      setCurrentTheme(savedTheme)
+      setTheme(savedTheme)
+      setHeaderTheme(savedTheme)
     }
+  }, [setTheme, setHeaderTheme])
+
+
+  const toggleTheme = () => {
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    setHeaderTheme(newTheme)
+    setCurrentTheme(newTheme)
+    window.localStorage.setItem(themeLocalStorageKey, newTheme)
   }
 
-  React.useEffect(() => {
-    const preference = window.localStorage.getItem(themeLocalStorageKey)
-    setValue(preference ?? 'auto')
-  }, [])
-
   return (
-    <Select onValueChange={onThemeChange} value={value}>
-      <SelectTrigger className="w-auto bg-transparent gap-2 pl-0 md:pl-3 border-none">
-        <SelectValue placeholder="Theme" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="auto">Auto</SelectItem>
-        <SelectItem value="light">Light</SelectItem>
-        <SelectItem value="dark">Dark</SelectItem>
-      </SelectContent>
-    </Select>
+    <button onClick={toggleTheme}  className="bg-white text-black transition-all ease-in-out duration-200 justify-center flex items-center gap-2 rounded-[12px] w-[148px] h-[56px] hover:bg-venetian hover:text-white" >
+      {currentTheme === 'light' ? (
+        <Moon className="h-[1.2rem] w-[1.2rem]" />
+      ) : (
+        <Sun className="h-[1.2rem] w-[1.2rem]" />
+      )}
+      <span className=" text-base">{currentTheme === 'light' ? t('darkMode') : t('lightMode')}</span>
+    </button>
   )
 }

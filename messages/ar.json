@@ -2,5 +2,13 @@
   "HomePage": {
     "title": "Hello world!",
     "about": "Go to the about page"
+  },
+  "Footer": {
+    "darkMode": "الوضع الليلي",
+    "lightMode": "الوضع النهاري"
+  },
+  "NotFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "لم يتم العثور على هذه الصفحة"
   }
 }
