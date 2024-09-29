@@ -37,6 +37,7 @@ import Projects from './collections/Projects'
 import Services from './collections/Services'
 import { Fronts } from './collections/Fronts'
 import { Socials } from './Socials/config'
+import { locales } from './i18n/locales'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -187,34 +188,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   localization: {
-    locales: [
-      {
-        label: {
-          en:'English',
-          ar: "الإنجليزية",
-          fr : "Anglais",
-        },
-        code: 'en',
-
-      },
-      {
-        label: {
-          en: 'French',
-          ar: "الفرنسية",
-          fr : "Français",
-        },
-        code: "fr",
-      },
-      {
-        label: {
-          en: 'Arabic',
-          ar: "العربية",
-          fr : "Arabe",
-        },
-        code: 'ar',
-        rtl: true,
-      },
-    ],
+    locales: locales,
     defaultLocale: 'en',
     fallback: true,
   },

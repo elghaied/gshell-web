@@ -12,19 +12,18 @@ import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import './globals.css'
 import { draftMode } from 'next/headers'
-import { HeaderWrapper } from '@/Header/HeaderWrapper'
 
 export default async function RootLayout({
   children,
-  params: { lang }
+  params: { locale }
 }: {
   children: React.ReactNode,
-  params: { lang: string }
+  params: { locale: string }
 }) {
   const { isEnabled } = draftMode()
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang={lang} suppressHydrationWarning>
+    <html className={cn(GeistSans.variable, GeistMono.variable)} lang={locale} suppressHydrationWarning>
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
@@ -32,14 +31,15 @@ export default async function RootLayout({
       </head>
       <body>
         <Providers>
-          <AdminBar
+          {/* <AdminBar
             adminBarProps={{
               preview: isEnabled,
             }}
-          />
+          /> */}
           <LivePreviewListener />
 
-          <HeaderWrapper />
+
+          <Header locale={locale as "en" | "fr" | "ar"} />
           {children}
           <Footer />
         </Providers>

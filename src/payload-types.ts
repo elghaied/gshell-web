@@ -35,7 +35,7 @@ export interface Config {
     footer: Footer;
     socials: Social;
   };
-  locale: 'en' | 'fr' | 'ar';
+  locale: 'en' | 'ar' | 'fr';
   user: User & {
     collection: 'users';
   };

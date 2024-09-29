@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+
 import type { Header as HeaderType } from '@/payload-types'
 
 type NavItemType = {
@@ -12,22 +12,18 @@ type NavItemType = {
   }
 }
 
-export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
+export const HeaderNav: React.FC<{ header: HeaderType; locale: "en" | "fr" | "ar" }> = ({ header, locale }) => {
   const navItems = header?.navItems || []
-  const pathname = usePathname()
+  const isRTL = locale === "ar"
 
   return (
-    <nav className="flex gap-10 items-center">
+    <nav className={`flex gap-10 items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
       {navItems.map(({ link }: NavItemType, i: number) => {
-        const isActive = pathname === link.url
         return (
           <Link
             key={i}
             href={link.url}
-            className={`
-              text-base no-underline transition-all duration-200 ease-in-out
-              ${isActive ? 'text-Venetian text-xl font-bold' : 'text-black hover:text-Venetian'}
-            `}
+            className='text-base no-underline transition-all duration-200 ease-in-out text-black hover:text-Venetian dark:text-white'
           >
             {link.label}
           </Link>

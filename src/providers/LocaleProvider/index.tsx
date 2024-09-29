@@ -1,55 +1,60 @@
-'use client'
+'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useRouter, usePathname } from '@/i18n/routing'; // Import routing from your defined routes
 
-type Locale = 'en' | 'fr' | 'ar'
+type Locale = 'en' | 'fr' | 'ar';
 
 interface LocaleContextType {
-  locale: Locale
-  setLocale: (locale: Locale) => void
+  locale: Locale;
+  setLocale: (locale: Locale) => void;
 }
 
-const LocaleContext = createContext<LocaleContextType | undefined>(undefined)
+const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
 
 export const LocaleProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const router = useRouter()
-  const pathname = usePathname()
-  const [locale, setLocaleState] = useState<Locale>('en')
+  const router = useRouter();
+  const pathname = usePathname();
+  const [locale, setLocaleState] = useState<Locale>('en');
 
   useEffect(() => {
-    const pathParts = pathname.split('/')
-    const langCode = pathParts[1] as Locale
+    // Extract the locale from the current pathname
+    const pathParts = pathname.split('/');
+    const langCode = pathParts[1] as Locale;
+
     if (['en', 'fr', 'ar'].includes(langCode)) {
-      setLocaleState(langCode)
+      setLocaleState(langCode);
     } else {
-      setLocaleState('en')
+      setLocaleState('en'); // Default to English if no locale is found
     }
-  }, [pathname])
+  }, [pathname]);
 
-  const setLocale = useCallback((newLocale: Locale) => {
-    setLocaleState(newLocale)
+  const setLocale = useCallback(
+    (newLocale: Locale) => {
+      setLocaleState(newLocale);
 
-    const newPath = newLocale === 'en'
-      ? pathname.replace(/^\/[a-z]{2}/, '') || '/'
-      : `/${newLocale}${pathname.replace(/^\/[a-z]{2}/, '')}`
+      // Instead of manipulating the path, use router to change the locale
+      // The `useRouter` from `next-intl` automatically handles locale-aware navigation
+      router.push(pathname, { locale: newLocale });
 
-    router.push(newPath)
-
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=${60 * 60 * 24 * 365}`
-  }, [pathname, router])
+      // Set the locale cookie for persistence
+      document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=${60 * 60 * 24 * 365}`;
+    },
+    [pathname, router]
+  );
 
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
       {children}
     </LocaleContext.Provider>
-  )
-}
+  );
+};
 
+// Custom hook to access the locale context
 export const useLocale = (): LocaleContextType => {
-  const context = useContext(LocaleContext)
+  const context = useContext(LocaleContext);
   if (context === undefined) {
-    throw new Error('useLocale must be used within a LocaleProvider')
+    throw new Error('useLocale must be used within a LocaleProvider');
   }
-  return context
-}
+  return context;
+};

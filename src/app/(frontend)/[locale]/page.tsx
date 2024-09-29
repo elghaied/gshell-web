@@ -16,10 +16,10 @@ export async function generateStaticParams() {
   ]
 }
 
-export default async function Page({ params: { lang = 'en' } }: { params: { lang: string } }) {
-  const url = lang === 'en' ? '/' : `/${lang}`
+export default async function Page({ params: { locale: locale = 'en' } }: { params: { locale: string } }) {
+  const url = locale === 'en' ? '/' : `/${locale}`
 
-  let front: FrontType | null = await queryFrontByLocale({ locale: lang })
+  let front: FrontType | null = await queryFrontByLocale({ locale: locale })
 
   if (!front) {
     return <PayloadRedirects url={url} />
@@ -28,7 +28,7 @@ export default async function Page({ params: { lang = 'en' } }: { params: { lang
   const { layout, welocme, aboutus, projectsSection, servicesSection, contactus } = front
 
   return (
-    <article className={`pt-16 pb-24 ${lang === 'ar' ? 'rtl' : 'ltr'}`}>
+    <article className={`pt-16 pb-24 ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
       <PayloadRedirects disableNotFound url={url} />
 
       <div id="about">

@@ -12,9 +12,10 @@ import LanguageSwitcher from './LanguagesSwitcher'
 
 interface HeaderClientProps {
   header: Header
+  locale: "en" | "fr" | "ar"
 }
 
-export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
+export const HeaderClient: React.FC<HeaderClientProps> = ({ header , locale }) => {
   /* Storing the value in a useState to avoid hydration errors */
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
@@ -38,7 +39,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
       <Link href="/" className='flex items-center'>
         <Logo />
       </Link>
-      <HeaderNav header={header} />
+      <HeaderNav header={header} locale={locale} />
       <LanguageSwitcher />
     </header>
   )
