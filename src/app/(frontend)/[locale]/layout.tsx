@@ -1,3 +1,4 @@
+// app/[locale]/layout.tsx
 import type { Metadata } from 'next'
 import { cn } from 'src/utilities/cn'
 import { GeistMono } from 'geist/font/mono'
@@ -12,6 +13,21 @@ import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import './globals.css'
 import { draftMode } from 'next/headers'
+import { notFound } from 'next/navigation'
+import { NextIntlClientProvider } from 'next-intl'
+import { unstable_setRequestLocale } from 'next-intl/server'
+
+export function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'ar' }]
+}
+
+async function getMessages(locale: string) {
+  try {
+    return (await import(`../../../../messages/${locale === '/' ? 'en' : locale}.json`)).default;
+  } catch (error) {
+    notFound();
+  }
+}
 
 export default async function RootLayout({
   children,
@@ -20,7 +36,11 @@ export default async function RootLayout({
   children: React.ReactNode,
   params: { locale: string }
 }) {
+  unstable_setRequestLocale(locale);
+
   const { isEnabled } = draftMode()
+  const messages = await getMessages(locale);
+  console.log("here ======================",locale)
 
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang={locale} suppressHydrationWarning>
@@ -30,19 +50,14 @@ export default async function RootLayout({
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
-        <Providers>
-          {/* <AdminBar
-            adminBarProps={{
-              preview: isEnabled,
-            }}
-          /> */}
-          <LivePreviewListener />
-
-
-          <Header locale={locale as "en" | "fr" | "ar"} />
-          {children}
-          <Footer />
-        </Providers>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <Providers>
+            <LivePreviewListener />
+            <Header   />
+            {children}
+            <Footer   />
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

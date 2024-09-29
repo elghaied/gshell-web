@@ -1,8 +1,9 @@
 // import { notFound } from 'next/navigation';
 // import { getRequestConfig } from 'next-intl/server';
-// import { locales, localesData, Locale } from './locales';
-// import { getCachedGlobal } from '@/utilities/getGlobals';
+// import { locales, Locale } from './locales';
+
 // import { Header } from '@/payload-types';
+// import { getGlobal } from '@/utilities/getGlobals';
 
 // // Helper function to transform Header to AbstractIntlMessages
 // function headerToMessages(header: Header): Record<string, string> {
@@ -22,7 +23,7 @@
 //   const validLocale = locale as Locale;
 
 //   // Fetch the header data based on locale
-//   const header: Header = await getCachedGlobal('header', 1, validLocale)();
+//   const header: Header = await getGlobal('header', 1, validLocale as 'en' | 'fr' | 'ar');
 //   const messages = headerToMessages(header);
 
 //   // Ensure a valid RequestConfig object is always returned
@@ -31,3 +32,10 @@
 //     timeZone: 'Europe/Vienna',
 //   };
 // });
+import {getRequestConfig} from 'next-intl/server';
+
+export default getRequestConfig(async ({locale}) => {
+  return {
+    messages: (await import(`../../messages/${locale}.json`)).default
+  };
+});

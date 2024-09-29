@@ -10,9 +10,9 @@ import { generateMeta } from '@/utilities/generateMeta'
 
 export async function generateStaticParams() {
   return [
-    { lang: 'en' },
-    { lang: 'fr' },
-    { lang: 'ar' },
+    { locale: 'en' },
+    { locale: 'fr' },
+    { locale: 'ar' },
   ]
 }
 

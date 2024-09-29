@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 
 import type { Header as HeaderType } from '@/payload-types'
+import { useLocale } from 'next-intl'
 
 type NavItemType = {
   link: {
@@ -12,9 +13,10 @@ type NavItemType = {
   }
 }
 
-export const HeaderNav: React.FC<{ header: HeaderType; locale: "en" | "fr" | "ar" }> = ({ header, locale }) => {
+export const HeaderNav: React.FC<{ header: HeaderType;  }> = ({ header }) => {
   const navItems = header?.navItems || []
-  const isRTL = locale === "ar"
+  const locale = useLocale()
+  const isRTL = locale === 'ar'
 
   return (
     <nav className={`flex gap-10 items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
