@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '..'
-import { Moon, Sun } from 'lucide-react'
 
 import { themeLocalStorageKey } from './types'
-
+import Image from 'next/image'
 import type { Theme } from './types'
 import { useTranslations } from 'next-intl'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
+import { Moon, Sun } from '@/components/Logo/Logo'
+
 
 export const ThemeSelector: React.FC = () => {
   const { setTheme } = useTheme()
@@ -25,7 +26,6 @@ export const ThemeSelector: React.FC = () => {
     }
   }, [setTheme, setHeaderTheme])
 
-
   const toggleTheme = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light'
     setTheme(newTheme)
@@ -35,13 +35,19 @@ export const ThemeSelector: React.FC = () => {
   }
 
   return (
-    <button onClick={toggleTheme}  className="bg-white text-black transition-all ease-in-out duration-200 justify-center flex items-center gap-2 rounded-[12px] w-[148px] h-[56px] hover:bg-venetian hover:text-white" >
+    <button
+      onClick={toggleTheme}
+       className="group bg-smoke text-[#212121] transition-all ease-in-out duration-200 justify-center flex items-center gap-2 rounded-[12px] w-[148px] h-[56px] hover:bg-venetian hover:text-white"
+    >
       {currentTheme === 'light' ? (
-        <Moon className="h-[1.2rem] w-[1.2rem]" />
+         <Moon  className='w-8 h-8 fill-current group-hover:fill-white'/>
       ) : (
-        <Sun className="h-[1.2rem] w-[1.2rem]" />
+         <Sun  className='w-8 h-8 fill-current group-hover:fill-white'/>
+
       )}
-      <span className=" text-base">{currentTheme === 'light' ? t('darkMode') : t('lightMode')}</span>
+      <span className=" text-base">
+        {currentTheme === 'light' ? t('darkMode') : t('lightMode')}
+      </span>
     </button>
   )
 }

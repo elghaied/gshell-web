@@ -89,7 +89,8 @@ export default {
         success: 'hsl(var(--success))',
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
-        venetian: '#D80D0D'
+        venetian: '#D80D0D',
+        smoke: '#F4F3F3'
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],

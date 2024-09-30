@@ -1,14 +1,14 @@
 'use client'
+
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
-
+import React from 'react'
+import { useMediaQuery } from 'react-responsive'
 import type { Header } from '@/payload-types'
-
 import { Logo } from '@/components/Logo/Logo'
 import { HeaderNav } from './Nav'
 import LanguageSwitcher from './LanguagesSwitcher'
+import { MobileHeader } from './MobileHeader'
 
 interface HeaderClientProps {
   header: Header
@@ -16,22 +16,22 @@ interface HeaderClientProps {
 }
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ header, locale }) => {
-  const { headerTheme, setHeaderTheme } = useHeaderTheme()
-  const pathname = usePathname()
+  const { headerTheme } = useHeaderTheme()
   const isRTL = locale === 'ar'
+  const isMobile = useMediaQuery({ maxWidth: 768 })
 
-  useEffect(() => {
-    setHeaderTheme(null)
-  }, [pathname, setHeaderTheme])
+  if (isMobile) {
+    return <MobileHeader header={header} />
+  }
 
   return (
     <header
-      className="container relative z-20 py-8 flex justify-between"
+      className="container relative z-20 py-4 lg:py-6 flex items-center justify-between"
       dir={isRTL ? 'rtl' : 'ltr'}
-      {...(headerTheme ? { 'data-theme': headerTheme } : {})}
+      data-theme={headerTheme || 'light'}
     >
-      <Link href="/" className='flex items-center'>
-        <Logo />
+      <Link href="/" className="flex items-center">
+        <Logo className="w-24 md:w-32 lg:w-40" />
       </Link>
       <HeaderNav header={header} />
       <LanguageSwitcher />
