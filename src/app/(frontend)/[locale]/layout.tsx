@@ -40,7 +40,7 @@ export default async function RootLayout({
 
   const { isEnabled } = draftMode()
   const messages = await getMessages(locale);
-  console.log("here ======================",locale)
+
 
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang={locale} suppressHydrationWarning>

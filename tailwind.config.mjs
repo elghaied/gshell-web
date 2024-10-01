@@ -1,13 +1,20 @@
 /** @type {import('tailwindcss').Config} */
+import fluid, { extract, screens, fontSize } from 'fluid-tailwind'
+import typographyPlugin from '@tailwindcss/typography'
+import animatePlugin from 'tailwindcss-animate'
+
 export default {
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
+  content: {
+    files: [
+      './pages/**/*.{ts,tsx}',
+      './components/**/*.{ts,tsx}',
+      './app/**/*.{ts,tsx}',
+      './src/**/*.{ts,tsx}',
+    ],
+    extract
+  },
   darkMode: ['selector', '[data-theme="dark"]'],
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
+  plugins: [typographyPlugin, animatePlugin, fluid],
   prefix: '',
   safelist: [
     'lg:col-span-4',
@@ -23,7 +30,10 @@ export default {
     'border-warning',
     'bg-warning/30',
   ],
+  presets: [fluid],
   theme: {
+    fontSize: fontSize,
+    screens: screens,
     container: {
       center: true,
       padding: {
@@ -46,6 +56,7 @@ export default {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        rock: 'rock 4s ease-in-out infinite',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -90,11 +101,12 @@ export default {
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
         venetian: '#D80D0D',
-        smoke: '#F4F3F3'
+        smoke: '#F4F3F3',
       },
       fontFamily: {
-        mono: ['var(--font-geist-mono)'],
-        sans: ['Inter', 'sans-serif'],      },
+
+        sans: ['Inter', 'sans-serif'],
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -103,6 +115,10 @@ export default {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
+        },
+        rock: {
+          '0%, 100%': { transform: 'rotate(-18deg)' },
+          '50%': { transform: 'rotate(18deg)' },
         },
       },
       typography: ({ theme }) => ({

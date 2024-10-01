@@ -16,6 +16,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { revalidateFront } from './hooks/revalidateFront'
+import {  AlignFeature, FixedToolbarFeature, HeadingFeature, HorizontalRuleFeature, InlineToolbarFeature, lexicalEditor, ParagraphFeature } from '@payloadcms/richtext-lexical'
 
 export const Fronts: CollectionConfig = {
   slug: 'fronts',
@@ -47,7 +48,7 @@ export const Fronts: CollectionConfig = {
       localized: true,
     },
     {
-      name: 'welocme',
+      name: 'welcome',
       type: 'group',
       label: 'Welcome Section',
       fields: [

@@ -588,7 +588,7 @@ export interface Service {
 export interface Front {
   id: string;
   title: string;
-  welocme?: {
+  welcome?: {
     sectionTitle?: string | null;
     title?: string | null;
     description?: string | null;

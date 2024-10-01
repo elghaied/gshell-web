@@ -7,16 +7,21 @@ import React, { cache } from 'react'
 import type { Front as FrontType } from '@/payload-types'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { generateMeta } from '@/utilities/generateMeta'
+import SectionTitle from '@/components/SectionTitle'
+import RichText from '@/components/RichText'
+import { MiniLogo } from '@/components/Logo/Logo'
+import GButton from '@/components/GButton'
+import WelcomeSection from '@/components/WelcomeSection'
 
 export async function generateStaticParams() {
-  return [
-    { locale: 'en' },
-    { locale: 'fr' },
-    { locale: 'ar' },
-  ]
+  return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'ar' }]
 }
 
-export default async function Page({ params: { locale: locale = 'en' } }: { params: { locale: string } }) {
+export default async function Page({
+  params: { locale: locale = 'en' },
+}: {
+  params: { locale: string }
+}) {
   const url = locale === 'en' ? '/' : `/${locale}`
 
   let front: FrontType | null = await queryFrontByLocale({ locale: locale })
@@ -25,22 +30,13 @@ export default async function Page({ params: { locale: locale = 'en' } }: { para
     return <PayloadRedirects url={url} />
   }
 
-  const { layout, welocme, aboutus, projectsSection, servicesSection, contactus } = front
+  const { layout, welcome, aboutus, projectsSection, servicesSection, contactus } = front
 
   return (
-    <article className={`pt-16 pb-24 ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
+    <article className={`container pt-16 pb-24 ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
       <PayloadRedirects disableNotFound url={url} />
 
-      <div id="about">
-        <h2>{aboutus?.sectionTitle  || 'About Us'}</h2>
-        <p>{aboutus?.aboutusDescription || 'This section is about us...'}</p>
-      </div>
-
-      <div id="welcome">
-        <h2>{welocme?.sectionTitle}</h2>
-        <h2>{welocme?.title}</h2>
-        <p>{welocme?.description}</p>
-      </div>
+      <WelcomeSection welcome={welcome} />
 
       <div id="projects">
         <h2>{projectsSection?.title || 'Portfolio'}</h2>
@@ -62,7 +58,11 @@ export default async function Page({ params: { locale: locale = 'en' } }: { para
   )
 }
 
-export async function generateMetadata({ params: { lang = 'en' } }: { params: { lang: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params: { lang = 'en' },
+}: {
+  params: { lang: string }
+}): Promise<Metadata> {
   const front = await queryFrontByLocale({ locale: lang })
   return generateMeta({ doc: front })
 }
