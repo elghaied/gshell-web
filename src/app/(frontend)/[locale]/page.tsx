@@ -12,6 +12,7 @@ import RichText from '@/components/RichText'
 import { MiniLogo } from '@/components/Logo/Logo'
 import GButton from '@/components/GButton'
 import WelcomeSection from '@/components/WelcomeSection'
+import AboutUsSection from '@/components/AboutUsSection'
 
 export async function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'ar' }]
@@ -37,6 +38,8 @@ export default async function Page({
       <PayloadRedirects disableNotFound url={url} />
 
       <WelcomeSection welcome={welcome} />
+
+      <AboutUsSection aboutUs={aboutus} />
 
       <div id="projects">
         <h2>{projectsSection?.title || 'Portfolio'}</h2>

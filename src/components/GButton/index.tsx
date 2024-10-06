@@ -8,7 +8,7 @@ interface GButtonProps {
 }
 function GButton({cta = "Hire me", className} : GButtonProps) {
   return (
-    <Link href="#contactus" className={cn('~px-4/8 ~py-2/4 ~text-sm/xl flex items-center justify-center  rounded-[12px] bg-black hover:bg-venetian text-white ', className)}>{cta}</Link>
+    <Link href="#contactus" className={cn('~px-4/8 ~py-2/4 ~text-sm/xl flex items-center justify-center  ~rounded-[.5rem]/[0.8rem] bg-black hover:bg-venetian text-white ~mt-2/4 ', className)}>{cta}</Link>
   )
 }
 
