@@ -53,6 +53,9 @@ export default {
       },
     },
     extend: {
+      boxShadow: {
+        custom: '-4px 0px 18px rgba(0, 0, 0, 0.05)',
+      },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
@@ -102,10 +105,13 @@ export default {
         warning: 'hsl(var(--warning))',
         venetian: '#D80D0D',
         smoke: '#F4F3F3',
+        charcoal: '#323433',
+        argent: '#BEC0BF'
       },
       fontFamily: {
 
-        sans: ['Inter', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {

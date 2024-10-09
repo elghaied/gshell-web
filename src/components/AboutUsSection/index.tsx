@@ -9,8 +9,8 @@ interface AboutUsSectionProps {
 
 function AboutUsSection({ aboutUs }: AboutUsSectionProps) {
   return (
-    <div id="about" className="relative h-[596px] ">
-      <div className="container mx-auto px-4">
+    <div id="about" className="relative ">
+
         <div className="flex flex-col lg:flex-row items-center justify-between min-h-[24rem]">
           <div className="w-full lg:w-1/2 relative z-10">
             <Man className="w-full h-auto scale-120 transform origin-left" />
@@ -25,7 +25,7 @@ function AboutUsSection({ aboutUs }: AboutUsSectionProps) {
               {aboutUs?.aboutusDescription || 'This section is about us...'}
             </p>
           </div>
-        </div>
+
       </div>
     </div>
   )

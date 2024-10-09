@@ -1,4 +1,3 @@
-// app/[locale]/layout.tsx
 import type { Metadata } from 'next'
 import { cn } from 'src/utilities/cn'
 import { GeistMono } from 'geist/font/mono'
@@ -16,7 +15,7 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { unstable_setRequestLocale } from 'next-intl/server'
-
+import { Inter, Poppins } from 'next/font/google'
 export function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'ar' }]
 }
@@ -29,18 +28,34 @@ async function getMessages(locale: string) {
   }
 }
 
+// Load the fonts with custom weights, styles, etc.
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-inter', // Optional: If you use CSS variables
+})
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-poppins', // Optional: If you use CSS variables
+})
+type LayoutProps = {
+  children: React.ReactNode,
+  params: Promise<{ locale: string }>
+}
+
 export default async function RootLayout({
   children,
-  params: { locale }
-}: {
-  children: React.ReactNode,
-  params: { locale: string }
-}) {
+  params
+}: LayoutProps) {
+  const resolvedParams = await params
+  const locale = resolvedParams.locale
+
   unstable_setRequestLocale(locale);
 
-  const { isEnabled } = draftMode()
+  const draftModeData = await draftMode()
   const messages = await getMessages(locale);
-
 
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang={locale} suppressHydrationWarning>
@@ -49,13 +64,13 @@ export default async function RootLayout({
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body>
+      <body  className={`${inter.variable} ${poppins.variable}`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <LivePreviewListener />
-            <Header   />
+            <Header />
             {children}
-            <Footer   />
+            <Footer />
           </Providers>
         </NextIntlClientProvider>
       </body>

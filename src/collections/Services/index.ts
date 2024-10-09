@@ -49,6 +49,17 @@ const Services: CollectionConfig = {
         ar: 'الفئة',
       },
     },
+    {
+      name: 'technologies',
+      type: 'relationship',
+      relationTo: 'technologies',
+      hasMany: true,
+      label: {
+        en: 'Technologies',
+        fr: 'Technologies',
+        ar: 'التكنولوجيا',
+      },
+    }
   ],
 }
 

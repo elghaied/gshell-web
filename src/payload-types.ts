@@ -578,6 +578,7 @@ export interface Service {
   title: string;
   description: string;
   category: string | Category;
+  technologies?: (string | Technology)[] | null;
   updatedAt: string;
   createdAt: string;
 }
