@@ -10,6 +10,7 @@ import { generateMeta } from '@/utilities/generateMeta'
 import WelcomeSection from '@/components/WelcomeSection'
 import AboutUsSection from '@/components/AboutUsSection'
 import { ServicesSection } from '@/components/ServicesSection/Component'
+import { ProjectsSection } from '@/components/ProjectsSection/Component'
 
 
 export async function generateStaticParams() {
@@ -36,7 +37,7 @@ export default async function Page({
   const { layout, welcome, aboutus, projectsSection, servicesSection, contactus } = front
 
   return (
-    <article className={`container pt-16 pb-24 ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
+    <article className={`container pt-16 pb-24  ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
       <PayloadRedirects disableNotFound url={url} />
 
       <WelcomeSection welcome={welcome} />
@@ -47,10 +48,10 @@ export default async function Page({
         <ServicesSection servicesSection={servicesSection} />
       )}
 
-      <div id="projects">
-        <h2>{projectsSection?.title || 'Portfolio'}</h2>
-        <p>{projectsSection?.description || 'Our previous work and projects...'}</p>
-      </div>
+      {projectsSection && (
+        <ProjectsSection projectSection={projectsSection} />
+      )}
+
 
       <div id="contact">
         <h2>{contactus?.title || 'Contact Us'}</h2>

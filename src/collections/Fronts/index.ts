@@ -94,7 +94,7 @@ export const Fronts: CollectionConfig = {
               name: 'projectsSection',
               type: 'group',
               fields: [
-                { name: 'sectionTitle', type: 'text', localized: true },
+                { localized: true ,name: 'sectionTitle', type: 'text', required: true },
                 { localized: true, name: 'title', type: 'text', required: true },
                 { localized: true, name: 'description', type: 'text', required: true },
               ],

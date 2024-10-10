@@ -64,7 +64,7 @@ export default async function RootLayout({
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body  className={`${inter.variable} ${poppins.variable}`}>
+      <body  className={`${inter.variable} ${poppins.variable} overflow-x-hidden`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <LivePreviewListener />

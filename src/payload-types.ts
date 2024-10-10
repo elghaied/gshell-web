@@ -601,7 +601,7 @@ export interface Front {
     aboutusDescription?: string | null;
   };
   projectsSection: {
-    sectionTitle?: string | null;
+    sectionTitle: string;
     title: string;
     description: string;
   };
