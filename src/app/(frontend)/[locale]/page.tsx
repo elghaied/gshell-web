@@ -11,6 +11,7 @@ import WelcomeSection from '@/components/WelcomeSection'
 import AboutUsSection from '@/components/AboutUsSection'
 import { ServicesSection } from '@/components/ServicesSection/Component'
 import { ProjectsSection } from '@/components/ProjectsSection/Component'
+import { TestimonialsSection } from '@/components/TestimonialsSection/Component'
 
 
 export async function generateStaticParams() {
@@ -33,7 +34,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  const { layout, welcome, aboutus, projectsSection, servicesSection, contactus } = front
+  const { layout, welcome, aboutus, projectsSection, servicesSection, contactus , testimonialsSection} = front
 
   return (
     <article className={`container pt-16 pb-24  ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
@@ -51,7 +52,9 @@ export default async function Page({ params: paramsPromise }: Args) {
         <ProjectsSection projectSection={projectsSection} />
       )}
 
-
+      {testimonialsSection && (
+        <TestimonialsSection testimonialsSection={testimonialsSection} />
+      )}
       <div id="contact">
         <h2>{contactus?.title || 'Contact Us'}</h2>
         <p>{contactus?.description || 'Get in touch...'}</p>

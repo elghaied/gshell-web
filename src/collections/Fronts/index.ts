@@ -133,7 +133,31 @@ export const Fronts: CollectionConfig = {
               ],
               label: 'Services',
             },
-
+            {
+              name: 'testimonialsSection',
+              type: 'group',
+              fields: [
+                {
+                  name: 'sectionTitle',
+                  type: 'text',
+                  localized: true,
+                  required: true,
+                },
+                {
+                  name: 'title',
+                  type: 'text',
+                  localized: true,
+                  required: true,
+                },
+                {
+                  name: 'description',
+                  type: 'text',
+                  localized: true,
+                  required: true,
+            },
+              ],
+              label: 'Testimonials',
+            },
             {
               name: 'contactus',
               type: 'group',
