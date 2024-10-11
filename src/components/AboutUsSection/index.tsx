@@ -12,18 +12,22 @@ function AboutUsSection({ aboutUs }: AboutUsSectionProps) {
     <div id="about" className="relative ">
 
         <div className="flex flex-col lg:flex-row items-center justify-between min-h-[24rem]">
-          <div className="w-full lg:w-1/2 relative z-10">
+          <div className="w-full lg:w-1/2 relative z-10 border-b-4 border-primary dark:border-venetian">
             <Man className="w-full h-auto scale-120 transform origin-left" />
           </div>
 
-          <div className="w-full lg:w-1/2 p-4 flex flex-col items-start max-w-[550px]">
+          <div className="w-full lg:w-1/2 p-4 flex flex-col items-start ">
+          <div className='lg:max-w-[550px] lg:-ml-32'>
+
+
             <SectionTitle title={aboutUs?.sectionTitle || 'About Us'} />
-            <h2 className="text-2xl md:text-4xl font-semibold mb-4">
+            <h2 className="~text-2xl/4xl font-semibold mb-4">
               {aboutUs?.aboutusTitle || 'About Us'}
             </h2>
-            <p className="text-base md:text-xl font-normal">
+            <p className="~text-base/xl font-normal">
               {aboutUs?.aboutusDescription || 'This section is about us...'}
             </p>
+            </div>
           </div>
 
       </div>

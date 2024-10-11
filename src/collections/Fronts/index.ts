@@ -7,7 +7,6 @@ import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 
-
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -16,7 +15,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { revalidateFront } from './hooks/revalidateFront'
-import {  AlignFeature, FixedToolbarFeature, HeadingFeature, HorizontalRuleFeature, InlineToolbarFeature, lexicalEditor, ParagraphFeature } from '@payloadcms/richtext-lexical'
+
 
 export const Fronts: CollectionConfig = {
   slug: 'fronts',
@@ -31,13 +30,17 @@ export const Fronts: CollectionConfig = {
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
-          path: `/${typeof data?.slug === 'string' ? data.slug : ''}`,
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'fronts',
         })
         return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
       },
     },
-    preview: (doc) =>
-      generatePreviewPath({ path: `/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
+    preview: (data) =>
+      generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'fronts',
+      }),
     useAsTitle: 'title',
   },
   fields: [
@@ -94,7 +97,7 @@ export const Fronts: CollectionConfig = {
               name: 'projectsSection',
               type: 'group',
               fields: [
-                { localized: true ,name: 'sectionTitle', type: 'text', required: true },
+                { localized: true, name: 'sectionTitle', type: 'text', required: true },
                 { localized: true, name: 'title', type: 'text', required: true },
                 { localized: true, name: 'description', type: 'text', required: true },
               ],
@@ -158,7 +161,7 @@ export const Fronts: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [ FormBlock],
+              blocks: [FormBlock],
               required: true,
             },
           ],

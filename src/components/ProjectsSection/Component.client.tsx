@@ -1,7 +1,7 @@
 'use client'
 
 import { Category, Front, Project, Service } from '@/payload-types'
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import SectionTitle from '../SectionTitle'
 import { ProjectCard } from './ProjectCard'
 
@@ -23,7 +23,7 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
   const sliderRef = useRef<HTMLDivElement>(null)
   const cardGap = 16 // Reduced gap for mobile
 
-  const updateCardWidth = () => {
+  const updateCardWidth = useCallback(() => {
     // Get the actual rendered width of the card container
     const cardElement = document.querySelector('.project-card-container')
     if (cardElement) {
@@ -39,7 +39,7 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
         setCardWidth(497)
       }
     }
-  }
+  }, [])
 
   useEffect(() => {
     updateCardWidth()
@@ -51,7 +51,7 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
 
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, [updateCardWidth])
 
   const handleDragStart = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
@@ -64,7 +64,7 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
     }
   }
 
-  const handleDragMove = (e: MouseEvent | TouchEvent) => {
+  const handleDragMove = useCallback((e: MouseEvent | TouchEvent) => {
     if (!isDragging) return
 
     const currentX = 'touches' in e ? e.touches[0].pageX : e.pageX
@@ -79,11 +79,11 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
         setIsDragging(false)
       }
     }
-  }
+  }, [isDragging, startX, activeIndex, projectItems.length])
 
-  const handleDragEnd = () => {
+  const handleDragEnd = useCallback(() => {
     setIsDragging(false)
-  }
+  }, [])
 
   useEffect(() => {
     const slider = sliderRef.current
@@ -100,10 +100,10 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
       window.removeEventListener('touchmove', handleDragMove)
       window.removeEventListener('touchend', handleDragEnd)
     }
-  }, [isDragging, startX, activeIndex])
+  }, [handleDragMove, handleDragEnd])
 
   return (
-    <section className="px-4 lg:px-8 my-8 lg:mt-44" id="projects" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <section className="px-4 lg:px-8 my-8 lg:mt-44 relative  z-0" id="projects" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <div className="flex flex-col lg:flex-row justify-between">
         <div className="w-full lg:w-2/5 flex justify-center flex-col mb-8">
           <div className="max-w-[350px]">

@@ -17,14 +17,13 @@ export async function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'ar' }]
 }
 
-type PageProps = {
+type Args = {
   params: Promise<{ locale: string }>
 }
 
-export default async function Page({
-  params,
-}: PageProps) {
-  const resolvedParams = await params
+
+export default async function Page({ params: paramsPromise }: Args) {
+  const resolvedParams = await paramsPromise
   const locale = resolvedParams.locale || 'en'
   const url = locale === 'en' ? '/' : `/${locale}`
 

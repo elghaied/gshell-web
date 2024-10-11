@@ -27,7 +27,7 @@ export const MobileHeader: React.FC<{ header: HeaderType;  }> = ({ header }) => 
 
   return (
     <>
-      <nav className="fixed bottom-0 left-0 right-0 bg-smoke dark:bg-gray-800 shadow-lg">
+      <nav className="fixed bottom-0 left-0 right-0 bg-smoke dark:bg-gray-800 shadow-lg  z-50">
         <div className="flex justify-between items-center px-4 py-2">
 
             <MiniLogo className="h-8"/>
@@ -47,7 +47,7 @@ export const MobileHeader: React.FC<{ header: HeaderType;  }> = ({ header }) => 
       </nav>
 
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-white dark:bg-gray-800 z-50 overflow-y-auto">
+        <div className="fixed inset-0 bg-white dark:bg-gray-800 z-[60] overflow-y-auto">
           <div className="flex flex-col items-center justify-center h-full space-y-6">
           <button
               onClick={toggleMenu}
