@@ -16,15 +16,17 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { Inter, Poppins } from 'next/font/google'
+
+import SvgPattern from '@/components/BackgroundPattern'
 export function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'ar' }]
 }
 
 async function getMessages(locale: string) {
   try {
-    return (await import(`../../../../messages/${locale === '/' ? 'en' : locale}.json`)).default;
+    return (await import(`../../../../messages/${locale === '/' ? 'en' : locale}.json`)).default
   } catch (error) {
-    notFound();
+    notFound()
   }
 }
 
@@ -41,35 +43,39 @@ const poppins = Poppins({
   variable: '--font-poppins', // Optional: If you use CSS variables
 })
 type LayoutProps = {
-  children: React.ReactNode,
+  children: React.ReactNode
   params: Promise<{ locale: string }>
 }
 
-export default async function RootLayout({
-  children,
-  params
-}: LayoutProps) {
+export default async function RootLayout({ children, params }: LayoutProps) {
   const resolvedParams = await params
   const locale = resolvedParams.locale
 
-  unstable_setRequestLocale(locale);
+  unstable_setRequestLocale(locale)
 
   const draftModeData = await draftMode()
-  const messages = await getMessages(locale);
+  const messages = await getMessages(locale)
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang={locale} suppressHydrationWarning>
+    <html
+      className={cn(GeistSans.variable, GeistMono.variable)}
+      lang={locale}
+      suppressHydrationWarning
+    >
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body  className={`${inter.variable} ${poppins.variable} overflow-x-hidden`}>
+      <body className={`${inter.variable} ${poppins.variable} overflow-x-hidden relative`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <LivePreviewListener />
             <Header />
-            {children}
+            <div id="content-wrapper" className="relative ">
+              <SvgPattern />
+              <div className="relative z-10">{children}</div>
+            </div>
             <Footer />
           </Providers>
         </NextIntlClientProvider>

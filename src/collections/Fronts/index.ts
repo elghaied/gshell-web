@@ -183,6 +183,37 @@ export const Fronts: CollectionConfig = {
               ],
             },
             {
+              name: 'skillsSection',
+              type: 'group',
+              fields: [
+                {
+                  name: 'sectionTitle',
+                  type: 'text',
+                  localized: true,
+                  required: true,
+                },
+                {
+                  name: 'title',
+                  type: 'text',
+                  localized: true,
+                  required: true,
+                },
+                {
+                  name: 'description',
+                  type: 'text',
+                  localized: true,
+                  required: true,
+                },
+              ],
+              label: {
+                en: 'Skills',
+                fr: 'Compétences',
+                ar: 'المهارات',
+              }
+
+
+            },
+            {
               name: 'layout',
               type: 'blocks',
               blocks: [FormBlock],

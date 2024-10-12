@@ -104,7 +104,7 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
   }
 
   return (
-    <section className="px-4 lg:px-8 my-8 lg:mt-44 relative z-0" id="projects" dir={isRTL ? 'rtl' : 'ltr'}>
+    <section className="px-4 lg:px-8 my-8 lg:mt-44 relative z-0 bg-white dark:bg-black " id="projects" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="flex flex-col lg:flex-row justify-between">
         <div className="w-full lg:w-2/5 flex justify-center flex-col mb-8">
           <div className={`max-w-[350px] ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}>

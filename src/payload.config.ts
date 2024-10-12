@@ -39,6 +39,7 @@ import { Fronts } from './collections/Fronts'
 import { Socials } from './Socials/config'
 import { locales } from './i18n/locales'
 import Testimonials from './collections/Testimonials'
+import Skills from './collections/Skills'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -120,7 +121,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users,Technologies,Projects,Services,Fronts,Testimonials],
+  collections: [Pages, Posts, Media, Categories, Users,Technologies,Projects,Services,Fronts,Testimonials,Skills],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
 

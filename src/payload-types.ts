@@ -21,6 +21,7 @@ export interface Config {
     services: Service;
     fronts: Front;
     testimonials: Testimonial;
+    skills: Skill;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -577,6 +578,19 @@ export interface Project {
 export interface Service {
   id: string;
   title: string;
+  icon:
+    | 'Code'
+    | 'Palette'
+    | 'Smartphone'
+    | 'ShoppingCart'
+    | 'Megaphone'
+    | 'Search'
+    | 'PenTool'
+    | 'Cloud'
+    | 'Shield'
+    | 'BarChart'
+    | 'Users'
+    | 'Wrench';
   description: string;
   category: string | Category;
   technologies?: (string | Technology)[] | null;
@@ -621,6 +635,11 @@ export interface Front {
     title: string;
     description: string;
   };
+  skillsSection: {
+    sectionTitle: string;
+    title: string;
+    description: string;
+  };
   layout: FormBlock[];
   meta?: {
     title?: string | null;
@@ -645,6 +664,33 @@ export interface Testimonial {
   occupation: string;
   content: string;
   rating: '5' | '4' | '3' | '2' | '1';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "skills".
+ */
+export interface Skill {
+  id: string;
+  title: string;
+  description: string;
+  icon:
+    | 'Paintbrush'
+    | 'Code'
+    | 'Search'
+    | 'BarChart'
+    | 'Smartphone'
+    | 'Globe'
+    | 'Megaphone'
+    | 'Camera'
+    | 'PenTool'
+    | 'Zap'
+    | 'Coffee'
+    | 'Lightbulb'
+    | 'Rocket'
+    | 'Target'
+    | 'Headphones';
   updatedAt: string;
   createdAt: string;
 }
@@ -738,6 +784,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'testimonials';
         value: string | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'skills';
+        value: string | Skill;
       } | null)
     | ({
         relationTo: 'redirects';

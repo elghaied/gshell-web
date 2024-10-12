@@ -107,7 +107,7 @@ export const TestimonialsClient: React.FC<TestimonialSectionProps> = ({
   }
 
   return (
-    <section className="px-4 lg:px-8 py-12" dir={isRTL ? 'rtl' : 'ltr'}>
+    <section className="px-4 lg:px-8 py-12 bg-white dark:bg-black " dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <SectionTitle title={testimonialsSection?.sectionTitle || 'Testimonials'} />

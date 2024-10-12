@@ -17,7 +17,7 @@ export async function Footer() {
   const isRTL = currentLocale === 'ar'
 
   return (
-    <footer className="border-t border-border bg-black  text-white hidden md:block" dir={isRTL ? 'rtl' : 'ltr'} >
+    <footer className="border-t border-border bg-black  text-white hidden md:block relative z-20" dir={isRTL ? 'rtl' : 'ltr'} >
       <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
         <div className="flex flex-col gap-20 ">
           <Link className="flex items-center" href="/">

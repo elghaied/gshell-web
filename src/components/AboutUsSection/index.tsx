@@ -9,7 +9,7 @@ interface AboutUsSectionProps {
 
 function AboutUsSection({ aboutUs }: AboutUsSectionProps) {
   return (
-    <div id="about" className="relative ">
+    <div id="about" className="relative bg-white dark:bg-black ">
 
         <div className="flex flex-col lg:flex-row items-center justify-between min-h-[24rem]">
           <div className="w-full lg:w-1/2 relative z-10 border-b-4 border-primary dark:border-venetian">
