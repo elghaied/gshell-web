@@ -65,17 +65,21 @@ export const TestimonialsClient: React.FC<TestimonialSectionProps> = ({
       const currentX = 'touches' in e ? e.touches[0].pageX : e.pageX
       const diff = startX - currentX
 
-      if (Math.abs(diff) > 50) {
-        if (diff > 0 && activeIndex < testimonialsItems.length - 1) {
+      // Reverse the direction for RTL languages
+      const adjustedDiff = isRTL ? -diff : diff
+
+      if (Math.abs(adjustedDiff) > 50) {
+        if (adjustedDiff > 0 && activeIndex < testimonialsItems.length - 1) {
           setActiveIndex(activeIndex + 1)
           setIsDragging(false)
-        } else if (diff < 0 && activeIndex > 0) {
+        } else if (adjustedDiff < 0 && activeIndex > 0) {
           setActiveIndex(activeIndex - 1)
           setIsDragging(false)
         }
       }
     },
-    [isDragging, startX, activeIndex, testimonialsItems.length],
+    [isDragging, startX, activeIndex, testimonialsItems.length, isRTL]
+
   )
 
   const handleDragEnd = useCallback(() => {
@@ -107,7 +111,7 @@ export const TestimonialsClient: React.FC<TestimonialSectionProps> = ({
   }
 
   return (
-    <section className="px-4 lg:px-8 py-12 bg-white dark:bg-black " dir={isRTL ? 'rtl' : 'ltr'}>
+    <section id="testimonials" className="px-4 lg:px-8 py-12 bg-white dark:bg-black " dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <SectionTitle title={testimonialsSection?.sectionTitle || 'Testimonials'} />

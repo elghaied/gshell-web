@@ -159,10 +159,12 @@ export const FormBlock: React.FC<
                   return null
                 })}
             </div>
-
-            <Button form={formID} type="submit" variant="default">
+            <div className='flex justify-end'>
+            <Button form={formID} type="submit"   className="rounded-xl py-4 px-6 hover:bg-venetian text-base capitalize font-medium  font-inter dark:bg-smoke dark:text-[#212121] hover:text-white">
               {submitButtonLabel}
             </Button>
+            </div>
+
           </form>
         )}
       </FormProvider>

@@ -13,6 +13,10 @@ import { ServicesSection } from '@/components/ServicesSection/Component'
 import { ProjectsSection } from '@/components/ProjectsSection/Component'
 import { TestimonialsSection } from '@/components/TestimonialsSection/Component'
 import { SkillsSection } from '@/components/SkillsSection/Component'
+import SectionTitle from '@/components/SectionTitle'
+import { FormBlock } from '@/blocks/Form/Component'
+import { Form } from '@payloadcms/plugin-form-builder/types'
+
 
 
 export async function generateStaticParams() {
@@ -41,9 +45,9 @@ export default async function Page({ params: paramsPromise }: Args) {
     <article className={`container pt-16 pb-24  ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
       <PayloadRedirects disableNotFound url={url} />
 
-      <WelcomeSection welcome={welcome} />
+      <WelcomeSection welcome={welcome} locale={locale} />
 
-      <AboutUsSection aboutUs={aboutus} />
+      <AboutUsSection aboutUs={aboutus} locale={locale} />
 
       {servicesSection && (
         <ServicesSection servicesSection={servicesSection} />
@@ -61,12 +65,14 @@ export default async function Page({ params: paramsPromise }: Args) {
         <SkillsSection skillsSection={skillsSection} />
 
       )}
-      <div id="contact">
-        <h2>{contactus?.title || 'Contact Us'}</h2>
-        <p>{contactus?.description || 'Get in touch...'}</p>
+      <div id="contactus" className='flex flex-col items-center mb-12'>
+        <SectionTitle title={contactus?.sectionTitle || 'Contact Us'} />
+        <h2 className=' ~text-xl/4xl font-semibold capitalize mb-6 dark:text-[##F4F3F3]'>{contactus?.title || 'Contact Us'}</h2>
+        <p className=' ~text-sm/base font-normal text-[#323433] dark:text-[#F8FEFB] w-1/2 md:w-1/3 text-center'>{contactus?.description || 'Get in touch...'}</p>
       </div>
 
-      <RenderBlocks blocks={layout} />
+      {/* <RenderBlocks blocks={layout} /> */}
+      {typeof layout[0].form != 'string' && <FormBlock form={layout[0].form as Form} enableIntro={false}   /> }
     </article>
   )
 }

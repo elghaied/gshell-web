@@ -64,16 +64,19 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
     const currentX = 'touches' in e ? e.touches[0].pageX : e.pageX
     const diff = startX - currentX
 
-    if (Math.abs(diff) > 50) {
-      if (diff > 0 && activeIndex < projectItems.length - 1) {
+    // Reverse the direction for RTL languages
+    const adjustedDiff = isRTL ? -diff : diff
+
+    if (Math.abs(adjustedDiff) > 50) {
+      if (adjustedDiff > 0 && activeIndex < projectItems.length - 1) {
         setActiveIndex(activeIndex + 1)
         setIsDragging(false)
-      } else if (diff < 0 && activeIndex > 0) {
+      } else if (adjustedDiff < 0 && activeIndex > 0) {
         setActiveIndex(activeIndex - 1)
         setIsDragging(false)
       }
     }
-  }, [isDragging, startX, activeIndex, projectItems.length])
+  }, [isDragging, startX, activeIndex, projectItems.length, isRTL])
 
   const handleDragEnd = useCallback(() => {
     setIsDragging(false)
@@ -104,7 +107,7 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
   }
 
   return (
-    <section className="px-4 lg:px-8 my-8 lg:mt-44 relative z-0 bg-white dark:bg-black " id="projects" dir={isRTL ? 'rtl' : 'ltr'}>
+    <section className="py-8 relative z-0 bg-white dark:bg-black " id="projects" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="flex flex-col lg:flex-row justify-between">
         <div className="w-full lg:w-2/5 flex justify-center flex-col mb-8">
           <div className={`max-w-[350px] ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}>

@@ -30,12 +30,13 @@ export const Textarea: React.FC<
 }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name}>{label}</Label>
+      {/* <Label htmlFor={name}>{label}</Label> */}
 
       <TextAreaComponent
         defaultValue={defaultValue}
         id={name}
         rows={rows}
+        placeholder={label}
         {...register(name, { required: requiredFromProps })}
       />
 
