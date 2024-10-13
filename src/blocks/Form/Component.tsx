@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 
 import { buildInitialFormState } from './buildInitialFormState'
 import { fields } from './fields'
+import { ar } from 'payload/i18n/ar';
 
 export type Value = unknown
 
@@ -33,6 +34,7 @@ export type FormBlockType = {
 export const FormBlock: React.FC<
   {
     id?: string
+    locale?: string
   } & FormBlockType
 > = (props) => {
   const {
@@ -40,6 +42,7 @@ export const FormBlock: React.FC<
     form: formFromProps,
     form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
     introContent,
+    locale
   } = props
 
   const formMethods = useForm({
@@ -125,7 +128,7 @@ export const FormBlock: React.FC<
   )
 
   return (
-    <div className="container lg:max-w-[48rem] pb-20">
+    <div className="container lg:max-w-[48rem] pb-20"  dir={ locale === 'ar' ? 'rtl' : 'ltr'}>
       <FormProvider {...formMethods}>
         {enableIntro && introContent && !hasSubmitted && (
           <RichText className="mb-8" content={introContent} enableGutter={false} />
@@ -160,7 +163,7 @@ export const FormBlock: React.FC<
                 })}
             </div>
             <div className='flex justify-end'>
-            <Button form={formID} type="submit"   className="rounded-xl py-4 px-6 hover:bg-venetian text-base capitalize font-medium  font-inter dark:bg-smoke dark:text-[#212121] hover:text-white">
+            <Button form={formID} type="submit"  aria-label={submitButtonLabel}  className="rounded-xl py-4 px-6 hover:bg-venetian text-base capitalize font-medium   dark:bg-smoke dark:text-[#212121] hover:text-white">
               {submitButtonLabel}
             </Button>
             </div>

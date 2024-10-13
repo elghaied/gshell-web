@@ -5,6 +5,7 @@ import React, { useState, useMemo } from 'react'
 import SectionTitle from '../SectionTitle'
 import { ServicesCard } from './ServicesCard'
 import { Badge } from '../ui/badge'
+import StyledTextParser from '../ui/StyledTextParser'
 
 type ServicesSectionProps = {
   servicesSection: Front['servicesSection']
@@ -40,9 +41,10 @@ export const ServicesClient: React.FC<ServicesSectionProps> = ({
     <section className="~py-11/28 bg-white dark:bg-black " id="services" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <div className="text-center mb-8">
         <SectionTitle title={servicesSection?.sectionTitle || 'Our Services'} />
-        <h2 className="text-2xl font-bold">{servicesSection?.title || 'Explore Our Offerings'}</h2>
+        <StyledTextParser text={servicesSection?.title } className={`${locale === 'ar' ? 'font-black' : ''} ~mb-4/6`} />
+
         {servicesSection?.description && (
-          <p className="mt-2 text-lg text-gray-600">{servicesSection.description}</p>
+          <p className="mt-2 text-lg text-[#323433] dark:text-[#F8FEFB]">{servicesSection.description}</p>
         )}
       </div>
       <div className="flex justify-center ~gap-2/4 flex-wrap ~mb-4/6">
@@ -69,7 +71,7 @@ export const ServicesClient: React.FC<ServicesSectionProps> = ({
       </div>
       <div className="flex justify-center ~gap-2/4 flex-wrap ">
         {filteredServices.map((service) => (
-          <ServicesCard key={service.id} service={service} />
+          <ServicesCard key={service.id} service={service} locale={locale} />
         ))}
       </div>
     </section>

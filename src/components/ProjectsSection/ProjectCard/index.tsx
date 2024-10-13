@@ -22,8 +22,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
               <Image
                 src={(image as Media).url || '/placeholder.svg'}
                 alt={title}
-                layout="fill"
-                objectFit="cover"
+                fill
+                sizes="(max-width: 640px) 280px, (max-width: 768px) 340px, 497px"
+                style={{ objectFit: 'cover' }}
                 className="transition-transform duration-300 group-hover:scale-105 rounded-lg"
               />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">

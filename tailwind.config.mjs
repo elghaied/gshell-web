@@ -54,7 +54,7 @@ export default {
     },
     extend: {
       boxShadow: {
-        custom: '-4px 0px 18px rgba(0, 0, 0, 0.05)',
+        custom: '-4px 0px 18px 0px rgba(0, 0, 0, 0.05)',
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -110,8 +110,10 @@ export default {
       },
       fontFamily: {
 
-        poppins: ['Poppins', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
+        sans: ['var(--font-primary)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        inter: ['var(--font-inter)', 'sans-serif'],
+        poppins: ['var(--font-poppins)', 'sans-serif'],
+        beiruti: ['var(--font-beiruti)', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {

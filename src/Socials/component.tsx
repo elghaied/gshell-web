@@ -19,9 +19,10 @@ export async function Socials() {
       {facebook && (
        <Link
        href={facebook}
-       className="text-black text-base h-8 w-8  bg-white rounded-[12px] flex items-center justify-center"
+       className="text-black text-base h-8 w-8  bg-white rounded-[12px] flex items-center justify-center hover:bg-venetian hover:text-white dark:hover:bg-[#FF0D0DD6] transition-colors ease-in-out duration-300"
        target="_blank"
        rel="noopener noreferrer"
+       aria-label="Facebook page"
      >
          <Facebook className="h-4 w-4" />
         </Link>
@@ -30,9 +31,10 @@ export async function Socials() {
       {instagram && (
         <Link
         href={instagram}
-        className="text-black text-base h-8 w-8  bg-white rounded-[12px] flex items-center justify-center"
+        className="text-black text-base h-8 w-8  bg-white rounded-[12px] flex items-center justify-center hover:bg-venetian hover:text-white dark:hover:bg-[#FF0D0DD6] transition-colors ease-in-out duration-300"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Instagram page"
       >
           <Instagram className="h-4 w-4" />
         </Link>
@@ -40,9 +42,10 @@ export async function Socials() {
       {linkedin && (
         <Link
           href={linkedin}
-          className="text-black text-base h-8 w-8  bg-white rounded-[12px] flex items-center justify-center"
+          className="text-black text-base h-8 w-8  bg-white rounded-[12px] flex items-center justify-center hover:bg-venetian dark:hover:bg-[#FF0D0DD6] hover:text-white transition-colors ease-in-out duration-300"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="LinkedIn page"
         >
       <Linkedin className="h-4 w-4" />
         </Link>

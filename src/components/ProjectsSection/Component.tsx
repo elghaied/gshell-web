@@ -13,10 +13,6 @@ export async function ProjectsSection({ projectSection }: { projectSection: Fron
     locale: (locale !== 'en' ? locale : undefined) as 'en' | 'fr' | 'ar' | 'all' | undefined,
     overrideAccess: true,
   })
-  // const categories = await payload.find({
-  //   collection: 'categories',
-  //   locale: (locale !== 'en' ? locale : undefined) as 'en' | 'fr' | 'ar' | 'all' | undefined,
-  //   overrideAccess: true,
-  // })
+
   return <ProjectsClient projectSection={projectSection} projectItems={projects.docs} locale={locale as 'ar' | 'en' | 'fr' | 'all'}  />
 }

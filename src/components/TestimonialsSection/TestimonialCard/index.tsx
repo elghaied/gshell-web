@@ -15,7 +15,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   const imageUrl = image && typeof image !== 'string' && 'url' in image ? image.url : null
 
   return (
-    <div className="flex ~gap-5/7 flex-col justify-between  ~p-4/8 border border-gray-200 rounded-lg h-full shadow-custom dark:bg-[#212121] dark:border-[#323433]">
+    <div className="flex ~gap-5/7 flex-col justify-between  ~p-4/8   rounded-lg h-full shadow-custom dark:bg-[#212121] dark:border-[#323433]">
       <div className="flex  flex-col ~gap-5/7">
         <StarRating rating={rating} />
 
@@ -34,7 +34,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
               />
             </div>
           ) : (
-            <UserCircle className="h-10 w-10 text-gray-400 dark:text-gray-600" />
+            <UserCircle className="h-10 w-10  text-gray-600 dark:text-[#3E3E3E] " />
           )}
 
           <div>

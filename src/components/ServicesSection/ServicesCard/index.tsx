@@ -10,6 +10,7 @@ import {
 
 type ServicesCardProps = {
   service: Service;
+  locale: string
 };
 
 const iconMap: Record<string, LucideIcon> = {
@@ -17,7 +18,7 @@ const iconMap: Record<string, LucideIcon> = {
   Search, PenTool, Cloud, Shield, BarChart, Users, Wrench
 };
 
-export function ServicesCard({ service }: ServicesCardProps) {
+export function ServicesCard({ service, locale }: ServicesCardProps) {
   const { title, description, technologies, icon } = service;
   const IconComponent = iconMap[icon as keyof typeof iconMap] || Code;
 
@@ -25,13 +26,13 @@ export function ServicesCard({ service }: ServicesCardProps) {
     <Card className="flex w-full max-w-xs flex-col items-start ~gap-4/6 rounded-lg bg-white dark:bg-[#212121] dark:text-white border-none shadow-custom ~px-9/12 ~py-4/6">
       <IconComponent className="w-7 h-7 text-venetian dark:text-[#FF0D0DD6]" />
       <CardHeader className="p-0">
-        <h3 className="text-balance font-poppins ~text-xl/3xl font-semibold leading-tight text-black dark:text-[#F4F3F3]">
+        <h3 className={`text-balance   ${locale === 'ar' ? 'font-extrabold ~text-2xl/4xl' : 'font-semibold ~text-xl/3xl font-poppins'} leading-tight text-black dark:text-[#F4F3F3]`}>
           {title}
         </h3>
       </CardHeader>
 
       <CardContent className='~gap-4/6 p-0 flex flex-col'>
-        <p className="font-inter ~text-sm/base leading-relaxed text-charcoal dark:text-[#F8FEFB]">
+        <p className={`${locale === 'ar' ? '~text-sm/base' : '~text-xs/sm'}  leading-relaxed text-charcoal dark:text-[#F8FEFB]`} >
           {description}
         </p>
 

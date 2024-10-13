@@ -9,6 +9,7 @@ import React from 'react'
 
 import { Error } from '../Error'
 import { Width } from '../Width'
+import { ar } from 'payload/i18n/ar';
 
 export const Checkbox: React.FC<
   CheckboxField & {
@@ -30,13 +31,14 @@ export const Checkbox: React.FC<
       <div className="flex items-center gap-2">
         <CheckboxUi
           defaultChecked={defaultValue}
+          aria-label={label}
           id={name}
           {...props}
           onCheckedChange={(checked) => {
             setValue(props.name, checked)
           }}
         />
-        <Label htmlFor={name}>{label}</Label>
+        <Label htmlFor={name} aria-label={label}>{label}</Label>
       </div>
       {requiredFromProps && errors[name] && <Error />}
     </Width>

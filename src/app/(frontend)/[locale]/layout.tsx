@@ -15,7 +15,7 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { unstable_setRequestLocale } from 'next-intl/server'
-import { Inter, Poppins } from 'next/font/google'
+import { Inter, Poppins, Beiruti } from 'next/font/google'
 
 import SvgPattern from '@/components/BackgroundPattern'
 export function generateStaticParams() {
@@ -35,12 +35,21 @@ const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-inter', // Optional: If you use CSS variables
+  display: 'swap',
 })
 
 const poppins = Poppins({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-poppins', // Optional: If you use CSS variables
+  display: 'swap',
+})
+const beiruti = Beiruti({
+  subsets: ['arabic'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-beiruti', // Optional: If you use CSS variables
+
+  display: 'swap',
 })
 type LayoutProps = {
   children: React.ReactNode
@@ -67,7 +76,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body className={`${inter.variable} ${poppins.variable} overflow-x-hidden relative`}>
+      <body className={` ${locale ==='ar' ? beiruti.className : inter.className} overflow-x-hidden relative`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <LivePreviewListener />

@@ -18,6 +18,7 @@ import {
   Headphones,
   LucideIcon,
 } from 'lucide-react'
+import StyledTextParser from '../ui/StyledTextParser'
 
 type SkillsSectionProps = {
   skillsSection: Front['skillsSection']
@@ -52,7 +53,8 @@ export const SkillsSectionClient = ({ skillsSection, skillsItems, locale }: Skil
         {/* Title section - takes up 2x2 space */}
         <div className="col-span-2 row-span-2 flex justify-center flex-col items-start">
           <SectionTitle title={sectionTitle || 'Skills'} />
-          <h2 className="~text-3xl/5xl font-semibold ~mb-4/6">{title || 'My Skills'}</h2>
+            <StyledTextParser text={title} className={` ${locale === 'ar' ? 'font-black' : ''} ~mb-4/6`}/>
+
           <p className="~text-sm/base font-normal">{description || 'These are my skills'}</p>
         </div>
 

@@ -4,6 +4,7 @@ import { Category, Front, Project, Service } from '@/payload-types'
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import SectionTitle from '../SectionTitle'
 import { ProjectCard } from './ProjectCard'
+import StyledTextParser from '../ui/StyledTextParser'
 
 type ProjectsSectionProps = {
   projectSection: Front['projectsSection']
@@ -112,9 +113,10 @@ export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
         <div className="w-full lg:w-2/5 flex justify-center flex-col mb-8">
           <div className={`max-w-[350px] ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}>
             <SectionTitle title={projectSection?.sectionTitle || 'Our Projects'} />
-            <h2 className="text-xl lg:text-2xl font-bold">{projectSection?.title || 'Our Projects'}</h2>
+            <StyledTextParser text={projectSection?.title }  className={`${locale === 'ar' ? 'font-black' : ''} ~mb-4/6`}  />
+
             {projectSection?.description && (
-              <p className="mt-2 text-base lg:text-lg text-gray-600">{projectSection.description}</p>
+              <p className="mt-2 text-base lg:text-lg text-[#323433] dark:text-[#F8FEFB]">{projectSection.description}</p>
             )}
           </div>
         </div>

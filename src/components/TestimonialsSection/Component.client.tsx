@@ -4,6 +4,7 @@ import { Front, Testimonial } from '@/payload-types'
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import SectionTitle from '../SectionTitle'
 import { TestimonialCard } from './TestimonialCard'
+import StyledTextParser from '../ui/StyledTextParser'
 
 type TestimonialSectionProps = {
   testimonialsSection: Front['testimonialsSection']
@@ -115,9 +116,8 @@ export const TestimonialsClient: React.FC<TestimonialSectionProps> = ({
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <SectionTitle title={testimonialsSection?.sectionTitle || 'Testimonials'} />
-          <h2 className="text-3xl lg:text-5xl font-semibold text-black dark:text-white">
-            {testimonialsSection?.title || 'What our clients say'}
-          </h2>
+          <StyledTextParser text={testimonialsSection?.title} className={`~text-xl/lg:w-1/2 ${locale === 'ar' ? 'font-black' : ''} `} />
+
         </div>
 
         <div className="relative overflow-hidden">
@@ -136,7 +136,7 @@ export const TestimonialsClient: React.FC<TestimonialSectionProps> = ({
                 key={testimonial.id}
                 className="flex-shrink-0 testimonial-card-container w-full sm:w-[380px] lg:w-[400px]"
               >
-                <TestimonialCard testimonial={testimonial} />
+                <TestimonialCard testimonial={testimonial}   />
               </div>
             ))}
           </div>
