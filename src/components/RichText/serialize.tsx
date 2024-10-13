@@ -1,11 +1,8 @@
-import { BannerBlock } from '@/blocks/Banner/Component'
-import { CallToActionBlock } from '@/blocks/CallToAction/Component'
-import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
-import { MediaBlock } from '@/blocks/MediaBlock/Component'
+
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '@/components/Link'
-import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
-import type { BannerBlock as BannerBlockProps } from '@/payload-types'
+import { DefaultNodeTypes } from '@payloadcms/richtext-lexical'
+
 
 import {
   IS_BOLD,
@@ -16,17 +13,9 @@ import {
   IS_SUPERSCRIPT,
   IS_UNDERLINE,
 } from './nodeFormat'
-import type { Page } from '@/payload-types'
 
-export type NodeTypes =
-  | DefaultNodeTypes
-  | SerializedBlockNode<
-      | Extract<Page['layout'][0], { blockType: 'cta' }>
-      | Extract<Page['layout'][0], { blockType: 'mediaBlock' }>
-      | BannerBlockProps
-      | CodeBlockProps
-    >
 
+export type NodeTypes = DefaultNodeTypes
 type Props = {
   nodes: NodeTypes[]
 }
@@ -96,38 +85,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
 
         const serializedChildren = 'children' in node ? serializedChildrenFn(node) : ''
 
-        if (node.type === 'block') {
-          const block = node.fields
 
-          const blockType = block?.blockType
-
-          if (!block || !blockType) {
-            return null
-          }
-
-          switch (blockType) {
-            case 'cta':
-              return <CallToActionBlock key={index} {...block} />
-            case 'mediaBlock':
-              return (
-                <MediaBlock
-                  className="col-start-1 col-span-3"
-                  imgClassName="m-0"
-                  key={index}
-                  {...block}
-                  captionClassName="mx-auto max-w-[48rem]"
-                  enableGutter={false}
-                  disableInnerContainer={true}
-                />
-              )
-            case 'banner':
-              return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
-            case 'code':
-              return <CodeBlock className="col-start-2" key={index} {...block} />
-            default:
-              return null
-          }
-        } else {
           switch (node.type) {
             case 'linebreak': {
               return <br className="col-start-2" key={index} />
@@ -204,7 +162,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             default:
               return null
           }
-        }
+
       })}
     </Fragment>
   )

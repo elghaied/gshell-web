@@ -24,14 +24,11 @@ import { fileURLToPath } from 'url'
 
 import Categories from './collections/Categories'
 import { Media } from './collections/Media'
-import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
 import Users from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { revalidateRedirects } from './hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
-import { Page, Post } from 'src/payload-types'
 import Technologies from './collections/Technologies'
 import Projects from './collections/Projects'
 import Services from './collections/Services'
@@ -40,15 +37,16 @@ import { Socials } from './Socials/config'
 import { locales } from './i18n/locales'
 import Testimonials from './collections/Testimonials'
 import Skills from './collections/Skills'
+import { Front } from './payload-types'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
+const generateTitle: GenerateTitle<Front> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
 }
 
-const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
+const generateURL: GenerateURL<Front> = ({ doc }) => {
   return doc?.slug
     ? `${process.env.NEXT_PUBLIC_SERVER_URL!}/${doc.slug}`
     : process.env.NEXT_PUBLIC_SERVER_URL!
@@ -94,7 +92,7 @@ export default buildConfig({
         BoldFeature(),
         ItalicFeature(),
         LinkFeature({
-          enabledCollections: ['pages', 'posts'],
+          enabledCollections: ['fronts'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
               if ('name' in field && field.name === 'url') return false
@@ -121,14 +119,14 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users,Technologies,Projects,Services,Fronts,Testimonials,Skills],
+  collections: [ Media, Categories, Users,Technologies,Projects,Services,Fronts,Testimonials,Skills],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
 
   globals: [Header, Footer,Socials],
   plugins: [
     redirectsPlugin({
-      collections: ['pages', 'posts','fronts'],
+      collections: ['fronts'],
       overrides: {
         // @ts-expect-error
         fields: ({ defaultFields }) => {
