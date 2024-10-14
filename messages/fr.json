@@ -1,14 +1,15 @@
 {
   "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+    "title": "Bonjour le monde!",
+    "about": "Allez à la page à propos"
   },
   "Footer": {
     "darkMode": "Mode sombre",
     "lightMode": "Mode clair"
   },
   "NotFound": {
-    "title": "Page not found",
-    "description": "The page you are looking for does not exist"
+    "title": "Page non trouvée",
+    "description": "La page que vous recherchez n'existe pas",
+    "backToHome": "Retour à l'accueil"
   }
 }
