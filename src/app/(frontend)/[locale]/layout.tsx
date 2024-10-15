@@ -14,7 +14,7 @@ import './globals.css'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
-import { unstable_setRequestLocale } from 'next-intl/server'
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
 import { Inter, Poppins, Beiruti } from 'next/font/google'
 
 import SvgPattern from '@/components/BackgroundPattern'
@@ -22,13 +22,6 @@ export function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'ar' }]
 }
 
-async function getMessages(locale: string) {
-  try {
-    return (await import(`../../../../messages/${locale === '/' ? 'en' : locale}.json`)).default
-  } catch (error) {
-    notFound()
-  }
-}
 
 // Load the fonts with custom weights, styles, etc.
 const inter = Inter({
@@ -63,7 +56,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   unstable_setRequestLocale(locale)
 
   const draftModeData = await draftMode()
-  const messages = await getMessages(locale)
+  const messages = await getMessages()
 
   return (
     <html

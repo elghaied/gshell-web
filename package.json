@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@fluid-tailwind/tailwind-merge": "^0.0.3",
-    "@formatjs/intl-localematcher": "^0.5.5",
+
     "@payloadcms/db-mongodb": "3.0.0-beta.113",
     "@payloadcms/live-preview-react": "3.0.0-beta.113",
     "@payloadcms/next": "3.0.0-beta.113",
@@ -42,7 +42,7 @@
     "jsonwebtoken": "9.0.2",
     "lexical": "0.17.0",
     "lucide-react": "^0.378.0",
-    "negotiator": "^0.6.3",
+
     "next": "15.0.0-canary.173",
     "next-intl": "^3.21.1",
     "payload": "3.0.0-beta.113",

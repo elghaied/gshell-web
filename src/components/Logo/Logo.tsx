@@ -7,7 +7,7 @@ export const Logo = ({ className = '' }: { className?: string }) => {
     <img
       alt="Gshell Logo"
       className={cn('max-w-[9.375rem] invert dark:invert-0', className)}
-      src="svgs/gshell-logo.svg"
+      src="/svgs/gshell-logo.svg"
     />
   )
 }
@@ -18,7 +18,7 @@ export const MiniLogo = ({ className = '' }: { className?: string }) => {
     <img
       alt="Gshell mini Logo"
       className={cn('max-w-[9.375rem] invert dark:invert-0', className)}
-      src="svgs/gshell-logo-mini.svg"
+      src="/svgs/gshell-logo-mini.svg"
     />
   )
 }

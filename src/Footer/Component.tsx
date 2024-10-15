@@ -7,7 +7,7 @@ import type { Footer } from '@/payload-types'
 
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { CMSLink } from '@/components/Link'
-import { getLocale, unstable_setRequestLocale } from 'next-intl/server'
+import { getLocale } from 'next-intl/server'
 import { Socials } from '@/Socials/component'
 
 export async function Footer() {
@@ -25,7 +25,7 @@ export async function Footer() {
               <img
                 alt="Payload Logo"
                 className="max-w-[15rem] invert-0"
-                src="svgs/gshell-logo.svg"
+                src="/svgs/gshell-logo.svg"
               />
             </picture>
           </Link>
