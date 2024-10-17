@@ -445,12 +445,15 @@ export interface Form {
 export interface Testimonial {
   id: string;
   author: string;
-  image: string | Media;
+  image?: (string | null) | Media;
   occupation: string;
   content: string;
   rating: '5' | '4' | '3' | '2' | '1';
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -2,6 +2,9 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { slugField } from '@/fields/slug'
+import { revalidateTestimonial } from './hooks/revalidateTestimonial'
+import { populatePublishedAt } from '@/hooks/populatePublishedAt'
 
 const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -30,7 +33,7 @@ const Testimonials: CollectionConfig = {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+
       label: {
         en: 'Image',
         fr: 'Image',
@@ -92,7 +95,19 @@ const Testimonials: CollectionConfig = {
         ar: 'تقييم',
       }
     },
+    ...slugField(),
   ],
+  hooks: {
+    afterChange: [revalidateTestimonial],
+    beforeChange: [populatePublishedAt],
+  },
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+    },
+    maxPerDoc: 50,
+  },
 }
-
 export default Testimonials

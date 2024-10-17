@@ -19,7 +19,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
       <div className="flex  flex-col ~gap-5/7">
         <StarRating rating={rating} />
 
-        <p className="~text-sm/base font-normal text-[#323433] dark:text-[#F8FEFB]">{content}</p>
+        <p className="~text-sm/base font-normal text-[#323433] dark:text-[#F8FEFB] text-wrap break-words">{content}</p>
 
 
       </div>
