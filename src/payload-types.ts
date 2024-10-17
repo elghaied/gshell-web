@@ -151,8 +151,11 @@ export interface Project {
   url?: string | null;
   category: string | Category;
   technologies?: (string | Technology)[] | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -183,8 +186,12 @@ export interface Service {
     | null;
   category: string | Category;
   technologies?: (string | Technology)[] | null;
+  publishedAt?: string | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

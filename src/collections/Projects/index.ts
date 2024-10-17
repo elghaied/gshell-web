@@ -2,6 +2,9 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { slugField } from '@/fields/slug'
+import { populatePublishedAt } from '@/hooks/populatePublishedAt'
+import { revalidateProject } from './hooks/revalidateProject'
 
 const Projects: CollectionConfig = {
   slug: 'projects',
@@ -86,7 +89,21 @@ const Projects: CollectionConfig = {
         ar: 'التقنيات',
       },
     },
+    ...slugField(),
   ],
+  hooks: {
+    afterChange: [revalidateProject],
+    beforeChange: [populatePublishedAt],
+  },
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+    },
+    maxPerDoc: 50,
+  },
+
 }
 
 export default Projects

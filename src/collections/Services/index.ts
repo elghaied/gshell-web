@@ -2,6 +2,9 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { populatePublishedAt } from '@/hooks/populatePublishedAt'
+import { revalidateService } from './hooks/revalidateService'
+import { slugField } from '@/fields/slug'
 
 const Services: CollectionConfig = {
   slug: 'services',
@@ -98,8 +101,28 @@ const Services: CollectionConfig = {
         fr: 'Technologies',
         ar: 'التكنولوجيا',
       },
-    }
+    },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    ...slugField(),
   ],
+  hooks: {
+    afterChange: [revalidateService],
+    beforeChange: [populatePublishedAt],
+  },
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+    },
+    maxPerDoc: 50,
+  },
 }
 
 export default Services
