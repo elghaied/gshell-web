@@ -43,7 +43,7 @@ export default function StyledTextParser({
   }
 
   return (
-    <h2 className={cn('dark:text-[#F4F3F3] text-semibold text-3xl leading-loose', className)}>
+    <h2 className={cn('dark:text-[#F4F3F3] font-semibold ~text-3xl/5xl leading-loose', className)}>
       {parseText(text)}
     </h2>
   );

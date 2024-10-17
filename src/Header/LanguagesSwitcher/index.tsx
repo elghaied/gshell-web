@@ -26,7 +26,7 @@ export default function LanguageSwitcher() {
           key={lang.code}
           onClick={() => handleLanguageChange(lang.code as 'en' | 'fr' | 'ar')}
           className={`
-            w-8 h-6 md:w-10 md:h-8 lg:w-12 lg:h-10 rounded text-xs md:text-sm lg:text-base font-bold
+            w-8 h-6 md:w-10 md:h-8 lg:w-12 lg:h-10 rounded text-xs md:text-sm lg:text-base font-bold font-inter
             ${locale === lang.code
               ? 'bg-black text-white dark:bg-white dark:text-black'
               : 'text-black dark:text-white hover:text-venetian dark:hover:text-venetian'
