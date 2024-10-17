@@ -18,7 +18,7 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { Form } from '@payloadcms/plugin-form-builder/types'
 import StyledTextParser from '@/components/ui/StyledTextParser'
 import { routing } from '@/i18n/routing'
-import { locales } from '@/i18n/locales'
+
 
 export async function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
@@ -31,7 +31,7 @@ type Args = {
 
 export default async function Page({ params: paramsPromise }: Args) {
   const resolvedParams = await paramsPromise
-  console.log("my locale", resolvedParams.locale)
+
   const locale = resolvedParams.locale || 'en'
   const url = locale === 'en' ? '/' : `/${locale}`
 

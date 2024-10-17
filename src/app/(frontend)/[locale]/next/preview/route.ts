@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import { CollectionSlug } from 'payload'
+import { getLocale } from 'next-intl/server'
 
 const payloadToken = 'payload-token'
 
@@ -22,6 +23,7 @@ export async function GET(
   const path = searchParams.get('path')
   const collection = searchParams.get('collection') as CollectionSlug
   const slug = searchParams.get('slug')
+
 
   const previewSecret = searchParams.get('previewSecret')
 
@@ -63,12 +65,14 @@ export async function GET(
       draft.disable()
       return new Response('You are not allowed to preview this page', { status: 403 })
     }
+    const currentLocale = await getLocale()
 
     // Verify the given slug exists
     try {
       const docs = await payload.find({
         collection: collection,
         draft: true,
+        locale: currentLocale as 'en' | 'fr' | 'ar' | 'all',
         where: {
           slug: {
             equals: slug,
