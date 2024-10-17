@@ -3,7 +3,6 @@ import { cn } from 'src/utilities/cn'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import React from 'react'
-import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -12,10 +11,10 @@ import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import './globals.css'
 import { draftMode } from 'next/headers'
-import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
-import { Inter, Poppins, Beiruti } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
+import localFont from 'next/font/local'
 
 import SvgPattern from '@/components/BackgroundPattern'
 export function generateStaticParams() {
@@ -37,9 +36,39 @@ const poppins = Poppins({
   variable: '--font-poppins', // Optional: If you use CSS variables
   display: 'swap',
 })
-const beiruti = Beiruti({
-  subsets: ['arabic'],
-  weight: ['400', '500', '600', '700', '800', '900'],
+const beiruti = localFont({
+   src: [
+    {
+      path: '../../../../public/fonts/beiruti-v2-arabic-regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/beiruti-v2-arabic-500.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/beiruti-v2-arabic-600.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/beiruti-v2-arabic-700.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/beiruti-v2-arabic-800.woff2',
+      weight: '800',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/beiruti-v2-arabic-900.woff2',
+      weight: '900',
+      style: 'normal',
+    }
+   ],
   variable: '--font-beiruti', // Optional: If you use CSS variables
 
   display: 'swap',
