@@ -54,8 +54,34 @@ const generateURL: GenerateURL<Front> = ({ doc }) => {
 
 export default buildConfig({
   admin: {
-    components: {
+    meta:{
+      description: 'Gshell dashboard',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          url: '/favicon.svg',
+        },
+        {
+          rel: 'apple-touch-icon',
+          type: 'image/svg+xml',
+          url: '/favicon.svg',
+        },
+      ],
 
+
+    },
+    components: {
+      graphics: {
+        Logo: {
+          path: '/components/WebLogo/index.tsx#WebLogo',
+
+        },
+        Icon: {
+          path: '/components/MiniLogo/index.tsx#MiniLogo',
+
+        },
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -119,11 +145,21 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [ Media, Categories, Users,Technologies,Projects,Services,Fronts,Testimonials,Skills],
+  collections: [
+    Media,
+    Categories,
+    Users,
+    Technologies,
+    Projects,
+    Services,
+    Fronts,
+    Testimonials,
+    Skills,
+  ],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
 
-  globals: [Header, Footer,Socials],
+  globals: [Header, Footer, Socials],
   plugins: [
     redirectsPlugin({
       collections: ['fronts'],
@@ -193,10 +229,7 @@ export default buildConfig({
     fallback: true,
   },
   i18n: {
-    supportedLanguages: {en,ar,fr},
+    supportedLanguages: { en, ar, fr },
     fallbackLanguage: 'en',
-
-
-
-  }
+  },
 })

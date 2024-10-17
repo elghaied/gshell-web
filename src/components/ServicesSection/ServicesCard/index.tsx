@@ -7,6 +7,7 @@ import {
   Search, PenTool, Cloud, Shield, BarChart, Users, Wrench,
   LucideIcon
 } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
 type ServicesCardProps = {
   service: Service;
@@ -19,7 +20,7 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 export function ServicesCard({ service, locale }: ServicesCardProps) {
-  const { title, description, technologies, icon } = service;
+  const { title, description, technologies, icon,details } = service;
   const IconComponent = iconMap[icon as keyof typeof iconMap] || Code;
 
   return (
@@ -35,7 +36,22 @@ export function ServicesCard({ service, locale }: ServicesCardProps) {
         <p className={`${locale === 'ar' ? '~text-sm/base' : '~text-xs/sm'}  leading-relaxed text-charcoal dark:text-[#F8FEFB]`} >
           {description}
         </p>
-
+        {details && details.length > 0 && (
+          <div className="flex flex-col w-full ~gap-3/4">
+            {details.map((detail, index) => (
+              <React.Fragment key={detail.id || index}>
+                <p className={`${
+                  locale === 'ar' ? '~text-sm/base' : '~text-xs/sm'
+                } text-charcoal dark:text-[#F8FEFB]`}>
+                  {detail.line}
+                </p>
+                {index < details.length - 1 && (
+                  <Separator className="bg-gray-200 dark:bg-gray-700" />
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+        )}
         <div className="flex flex-wrap ~gap-2/4">
           {technologies?.map((tech: Technology, index) => (
             <Badge

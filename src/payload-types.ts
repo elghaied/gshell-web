@@ -175,6 +175,12 @@ export interface Service {
     | 'Users'
     | 'Wrench';
   description: string;
+  details?:
+    | {
+        line: string;
+        id?: string | null;
+      }[]
+    | null;
   category: string | Category;
   technologies?: (string | Technology)[] | null;
   updatedAt: string;
@@ -211,7 +217,6 @@ export interface Front {
   testimonialsSection: {
     sectionTitle: string;
     title: string;
-    description: string;
   };
   contactus: {
     sectionTitle: string;

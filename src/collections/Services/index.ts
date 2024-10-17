@@ -58,6 +58,26 @@ const Services: CollectionConfig = {
       localized: true,
     },
     {
+      name: 'details',
+      type : 'array',
+      fields: [
+        {
+          name: 'line',
+          type: 'text',
+          required: true,
+          localized: true,
+        },
+      ],
+      label: {
+        en: 'Details',
+        fr: 'Details',
+        ar: 'التفاصيل',
+      },
+      localized: true,
+
+
+    },
+    {
       name: 'category',
       type: 'relationship',
       relationTo: 'categories',

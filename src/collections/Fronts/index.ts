@@ -149,12 +149,7 @@ export const Fronts: CollectionConfig = {
                   localized: true,
                   required: true,
                 },
-                {
-                  name: 'description',
-                  type: 'text',
-                  localized: true,
-                  required: true,
-            },
+
               ],
               label: 'Testimonials',
             },
