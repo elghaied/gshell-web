@@ -48,6 +48,7 @@ const Skills: CollectionConfig = {
       ],
       defaultValue: 'Code',
     },
+
   ],
 }
 

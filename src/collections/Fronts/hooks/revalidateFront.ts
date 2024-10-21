@@ -10,9 +10,8 @@ export const revalidateFront: CollectionAfterChangeHook<Front> = ({
 }) => {
   if (doc._status === 'published') {
     routing.locales.forEach(locale => {
-      const path = doc.slug === 'home'
-        ? `/${locale}`
-        : `/${locale}/${doc.slug}`
+  const path = `/${locale}`
+
 
       payload.logger.info(`Revalidating front at path: ${path}`)
       revalidatePath(path)
@@ -22,9 +21,8 @@ export const revalidateFront: CollectionAfterChangeHook<Front> = ({
   // If the front was previously published, we need to revalidate the old path
   if (previousDoc?._status === 'published' && doc._status !== 'published') {
     routing.locales.forEach(locale => {
-      const oldPath = previousDoc.slug === 'home'
-        ? `/${locale}`
-        : `/${locale}/${previousDoc.slug}`
+      const oldPath =  `/${locale}`
+
 
       payload.logger.info(`Revalidating old front at path: ${oldPath}`)
       revalidatePath(oldPath)

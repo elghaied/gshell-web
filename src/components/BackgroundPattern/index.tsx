@@ -59,6 +59,7 @@ export default function SvgPattern() {
   const [patterns, setPatterns] = useState<JSX.Element[]>([])
 
   useEffect(() => {
+    // Generate patterns only once when component mounts
     const generatePatterns = () => {
       const newPatterns: JSX.Element[] = []
       let currentHeight = 0
@@ -83,17 +84,32 @@ export default function SvgPattern() {
         )
 
         currentHeight += spacing + (isSvg1 ? 133 : 191)
-        isLeft = !isLeft // Strictly alternate between left and right
+        isLeft = !isLeft
       }
 
       setPatterns(newPatterns)
     }
 
+    // Generate patterns once on mount
     generatePatterns()
-    window.addEventListener('resize', generatePatterns)
+
+    // Only regenerate on actual window resize, not on mobile UI changes
+    let timeoutId: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        const newContentHeight = document.getElementById('content-wrapper')?.clientHeight || 0
+        if (Math.abs(newContentHeight - (document.getElementById('content-wrapper')?.clientHeight || 0)) > 100) {
+          generatePatterns()
+        }
+      }, 100)
+    }
+
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', generatePatterns)
+      window.removeEventListener('resize', handleResize)
+      clearTimeout(timeoutId)
     }
   }, [])
 

@@ -14,7 +14,7 @@ type ServicesSectionProps = {
   categories: Category[]
 }
 
-export const ServicesClient: React.FC<ServicesSectionProps> = ({
+export const ServicesSection: React.FC<ServicesSectionProps> = ({
   servicesSection,
   servicesItems,
   locale,

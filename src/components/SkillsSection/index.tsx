@@ -44,7 +44,7 @@ const iconMap: Record<string, LucideIcon> = {
   Headphones,
 }
 
-export const SkillsSectionClient = ({ skillsSection, skillsItems, locale }: SkillsSectionProps) => {
+export const SkillsSection = ({ skillsSection, skillsItems, locale }: SkillsSectionProps) => {
   const { sectionTitle, description, title } = skillsSection
 
   return (

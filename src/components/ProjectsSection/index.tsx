@@ -12,7 +12,7 @@ type ProjectsSectionProps = {
   locale: 'en' | 'fr' | 'ar' | 'all'
 }
 
-export const ProjectsClient: React.FC<ProjectsSectionProps> = ({
+export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   projectSection,
   projectItems,
   locale,

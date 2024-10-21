@@ -12,7 +12,7 @@ type TestimonialSectionProps = {
   locale: string
 }
 
-export const TestimonialsClient: React.FC<TestimonialSectionProps> = ({
+export const TestimonialsSection: React.FC<TestimonialSectionProps> = ({
   testimonialsSection,
   testimonialsItems,
   locale,

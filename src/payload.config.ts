@@ -22,7 +22,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
-import Categories from './collections/Categories'
+import Categories from './collections/Categories/Categories'
 import { Media } from './collections/Media'
 import Users from './collections/Users'
 import { Footer } from './Footer/config'

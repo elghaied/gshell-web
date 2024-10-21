@@ -4,20 +4,21 @@ import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
-import type { Front as FrontType } from '@/payload-types'
+import type { Category, Front as FrontType, Project, Service, Skill, Testimonial } from '@/payload-types'
 
 import { generateMeta } from '@/utilities/generateMeta'
 import WelcomeSection from '@/components/WelcomeSection'
 import AboutUsSection from '@/components/AboutUsSection'
-import { ServicesSection } from '@/components/ServicesSection/Component'
-import { ProjectsSection } from '@/components/ProjectsSection/Component'
-import { TestimonialsSection } from '@/components/TestimonialsSection/Component'
-import { SkillsSection } from '@/components/SkillsSection/Component'
+
 import SectionTitle from '@/components/SectionTitle'
 import { FormBlock } from '@/blocks/Form/Component'
 import { Form } from '@payloadcms/plugin-form-builder/types'
 import StyledTextParser from '@/components/ui/StyledTextParser'
 import { routing } from '@/i18n/routing'
+import { ServicesSection } from '@/components/ServicesSection'
+import { ProjectsSection } from '@/components/ProjectsSection'
+import { TestimonialsSection } from '@/components/TestimonialsSection'
+import { SkillsSection } from '@/components/SkillsSection'
 
 
 export async function generateStaticParams() {
@@ -36,6 +37,12 @@ export default async function Page({ params: paramsPromise }: Args) {
   const url = locale === 'en' ? '/' : `/${locale}`
 
   let front: FrontType | null = await queryFrontByLocale({ locale })
+  let services : Service[] | null = await queryServicesByLocale({ locale })
+  let projects : Project[] | null = await queryProjectsByLocale({ locale })
+  let testimonials : Testimonial[] | null = await queryTestimonialsByLocale({ locale })
+  let skills : Skill[] | null = await querySkillsByLocale({ locale })
+  let categories : Category[] | null = await queryCategoriesByLocale({ locale })
+
 
   if (!front) {
     return <PayloadRedirects disableNotFound url={url} />
@@ -60,13 +67,13 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <AboutUsSection aboutUs={aboutus} locale={locale} />
 
-      {servicesSection && <ServicesSection servicesSection={servicesSection} />}
+      {servicesSection && <ServicesSection servicesSection={servicesSection} servicesItems={services} locale={locale as 'ar' | 'en' | 'fr' | 'all'} categories={categories} />}
 
-      {projectsSection && <ProjectsSection projectSection={projectsSection} />}
+      {projectsSection && <ProjectsSection  projectSection={projectsSection} projectItems={projects} locale={locale as 'ar' | 'en' | 'fr' | 'all'} />}
 
-      {testimonialsSection && <TestimonialsSection testimonialsSection={testimonialsSection} />}
+      {testimonialsSection && <TestimonialsSection testimonialsSection={testimonialsSection} testimonialsItems={testimonials} locale={locale as 'ar' | 'en' | 'fr' | 'all'} />}
 
-      {skillsSection && <SkillsSection skillsSection={skillsSection} />}
+      {skillsSection && <SkillsSection  skillsSection={skillsSection} skillsItems={skills} locale={locale as 'ar' | 'en' | 'fr' | 'all'}/>}
       <section id="contactus" className="flex flex-col items-start md:items-center mb-12">
         <SectionTitle title={contactus?.sectionTitle || 'Contact Us'} />
         <StyledTextParser text={contactus.title} className={`~mb-4/6 ${locale === 'ar' ? 'font-black' : ''}`} />
@@ -107,4 +114,78 @@ const queryFrontByLocale = cache(async ({ locale }: { locale: string }) => {
   })
 
   return result.docs?.[0] || null
+})
+
+
+const queryServicesByLocale = cache(async ({ locale }: { locale: string }) => {
+  const draftModeData = await draftMode()
+  const payload = await getPayloadHMR({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'services',
+    draft: draftModeData.isEnabled,
+    locale: (locale !== 'en' ? locale : undefined) as 'en' | 'fr' | 'ar' | 'all' | undefined,
+    overrideAccess: true,
+  })
+
+  return result.docs || null
+})
+
+
+const queryProjectsByLocale = cache(async ({ locale }: { locale: string }) => {
+  const draftModeData = await draftMode()
+  const payload = await getPayloadHMR({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'projects',
+    draft: draftModeData.isEnabled,
+    locale: (locale !== 'en' ? locale : undefined) as 'en' | 'fr' | 'ar' | 'all' | undefined,
+    overrideAccess: true,
+  })
+
+  return result.docs || null
+})
+
+
+const queryTestimonialsByLocale = cache(async ({ locale }: { locale: string }) => {
+  const draftModeData = await draftMode()
+  const payload = await getPayloadHMR({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'testimonials',
+    draft: draftModeData.isEnabled,
+    locale: (locale !== 'en' ? locale : undefined) as 'en' | 'fr' | 'ar' | 'all' | undefined,
+    overrideAccess: true,
+  })
+
+  return result.docs || null
+})
+
+const querySkillsByLocale = cache(async ({ locale }: { locale: string }) => {
+  const draftModeData = await draftMode()
+  const payload = await getPayloadHMR({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'skills',
+    draft: draftModeData.isEnabled,
+    locale: (locale !== 'en' ? locale : undefined) as 'en' | 'fr' | 'ar' | 'all' | undefined,
+    overrideAccess: true,
+  })
+
+  return result.docs || null
+})
+
+
+const queryCategoriesByLocale = cache(async ({ locale }: { locale: string }) => {
+  const draftModeData = await draftMode()
+  const payload = await getPayloadHMR({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'categories',
+    draft: draftModeData.isEnabled,
+    locale: (locale !== 'en' ? locale : undefined) as 'en' | 'fr' | 'ar' | 'all' | undefined,
+    overrideAccess: true,
+  })
+
+  return result.docs || null
 })
