@@ -3,8 +3,8 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
-import { revalidateService } from './hooks/revalidateService'
 import { slugField } from '@/fields/slug'
+import { revalidateTag } from 'next/cache'
 
 const Services: CollectionConfig = {
   slug: 'services',
@@ -112,7 +112,8 @@ const Services: CollectionConfig = {
     ...slugField(),
   ],
   hooks: {
-    afterChange: [revalidateService],
+    afterChange: [() => revalidateTag('services')],
+    afterDelete: [ () => revalidateTag('services') ],
     beforeChange: [populatePublishedAt],
   },
   versions: {

@@ -2,9 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
-import { revalidateFront } from '../Fronts/hooks/revalidateFront'
+
 import { slugField } from '@/fields/slug'
-import { revalidateSkill } from './hooks/revalidateSkill'
+
+import { revalidateTag } from 'next/cache'
 
 const Skills: CollectionConfig = {
   slug: 'skills',
@@ -22,11 +23,23 @@ const Skills: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
+      label: {
+        en: 'Title',
+        fr: 'Titre',
+        ar: 'العنوان',
+      },
     },
     {
       name: 'description',
       type: 'textarea',
       required: true,
+      localized: true,
+      label:{
+        en: 'description',
+        fr: 'description',
+        ar: 'الوصف'
+      }
     },
     {
       name: 'icon',
@@ -55,7 +68,8 @@ const Skills: CollectionConfig = {
   ],
 
   hooks: {
-    afterChange: [revalidateSkill],
+    afterChange: [() => revalidateTag('skills')],
+    afterDelete: [() => revalidateTag('skills')],
   },
   versions: {
     drafts: {

@@ -26,6 +26,7 @@ export const Media: CollectionConfig = {
       name: 'alt',
       type: 'text',
       required: true,
+      localized:true
     },
     {
       name: 'caption',
@@ -39,24 +40,58 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     disableLocalStorage: true,
-    resizeOptions: {
-      position: 'center',
-      width: 200,
-      height: 200,
-    },
+    mimeTypes: ['image/*'],
     imageSizes: [
+      // Projects images - aspect ratio 1.23:1 (401x327)
       {
-        height: 400,
-        width: 400,
+        width: 401,
+        height: 327,
         crop: 'center',
-        name: 'square',
+        name: 'projectOriginal',
       },
       {
-        width: 900,
-        height: 450,
+        width: 300,
+        height: Math.round(300 * (327 / 401)), // Keeping the ratio of 1.23:1 for smaller sizes
         crop: 'center',
-        name: 'sixteenByNineMedium',
+        name: 'projectSmall',
+      },
+      {
+        width: 200,
+        height: Math.round(200 * (327 / 401)),
+        crop: 'center',
+        name: 'projectThumbnail',
+      },
+      {
+        width: 150,
+        height: Math.round(150 * (327 / 401)),
+        crop: 'center',
+        name: 'projectMobile',
+      },
+
+      // Social Media SEO - typical OpenGraph aspect ratio of 1.91:1
+      {
+        width: 1200,
+        height: 627,
+        crop: 'center',
+        name: 'socialCardLarge',
+      },
+      {
+        width: 600,
+        height: 314,
+        crop: 'center',
+        name: 'socialCardMedium',
+      },
+      {
+        width: 300,
+        height: 157,
+        crop: 'center',
+        name: 'socialCardSmall',
       },
     ],
+    resizeOptions: {
+      width: 200,
+      height: 200,
+      position: 'center',
+    },
   },
 }

@@ -14,7 +14,8 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { revalidateFront } from './hooks/revalidateFront'
+
+import { revalidateTag } from 'next/cache'
 
 
 export const Fronts: CollectionConfig = {
@@ -256,7 +257,8 @@ export const Fronts: CollectionConfig = {
     ...slugField(),
   ],
   hooks: {
-    afterChange: [revalidateFront],
+    afterChange: [()=> revalidateTag('fronts')],
+    afterDelete: [ () => revalidateTag('fronts') ],
     beforeChange: [populatePublishedAt],
   },
   versions: {

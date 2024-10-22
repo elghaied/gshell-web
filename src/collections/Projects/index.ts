@@ -4,7 +4,8 @@ import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
-import { revalidateProject } from './hooks/revalidateProject'
+
+import { revalidateTag } from 'next/cache'
 
 const Projects: CollectionConfig = {
   slug: 'projects',
@@ -46,6 +47,7 @@ const Projects: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       required: true,
+
       label: {
         en: 'Image',
         fr: 'Image',
@@ -92,7 +94,8 @@ const Projects: CollectionConfig = {
     ...slugField(),
   ],
   hooks: {
-    afterChange: [revalidateProject],
+    afterChange: [()=>  revalidateTag('projects')],
+    afterDelete: [ () => revalidateTag('projects') ],
     beforeChange: [populatePublishedAt],
   },
   versions: {

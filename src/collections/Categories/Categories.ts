@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
-import { revalidateCategory } from './hooks/revalidateCategory'
+import { revalidateTag } from 'next/cache'
 
 const Categories: CollectionConfig = {
   slug: 'categories',
@@ -20,10 +20,17 @@ const Categories: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
+      label: {
+        en: 'Title',
+        fr: 'Titre',
+        ar: 'العنوان',
+      },
     },
   ],
   hooks: {
-    afterChange: [revalidateCategory],
+    afterChange: [() => revalidateTag('categories')],
+    afterDelete: [ () => revalidateTag('categories') ],
   }
 }
 

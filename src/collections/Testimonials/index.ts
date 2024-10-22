@@ -3,8 +3,9 @@ import type { CollectionConfig } from 'payload'
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
 import { slugField } from '@/fields/slug'
-import { revalidateTestimonial } from './hooks/revalidateTestimonial'
+
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
+import { revalidateTag } from 'next/cache'
 
 const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -98,7 +99,8 @@ const Testimonials: CollectionConfig = {
     ...slugField(),
   ],
   hooks: {
-    afterChange: [revalidateTestimonial],
+    afterChange: [()=> revalidateTag('testimonials')],
+    afterDelete: [ () => revalidateTag('testimonials') ],
     beforeChange: [populatePublishedAt],
   },
   versions: {

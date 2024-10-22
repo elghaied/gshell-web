@@ -22,7 +22,7 @@ import { SkillsSection } from '@/components/SkillsSection'
 import { unstable_cache } from 'next/cache'
 
 export const dynamic = 'force-dynamic'
-export const revalidate = 60
+export const revalidate = 86400
 
 export async function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
@@ -118,9 +118,9 @@ const queryFrontByLocale = unstable_cache(async ({ locale }: { locale: string })
 
   return result.docs?.[0] || null
 },
-['front'],
+['fronts'],
 {
-  tags: ['front'],
+  tags: ['fronts'],
   revalidate,
 })
 
