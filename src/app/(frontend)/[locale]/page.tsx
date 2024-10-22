@@ -19,7 +19,10 @@ import { ServicesSection } from '@/components/ServicesSection'
 import { ProjectsSection } from '@/components/ProjectsSection'
 import { TestimonialsSection } from '@/components/TestimonialsSection'
 import { SkillsSection } from '@/components/SkillsSection'
+import { unstable_cache } from 'next/cache'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export async function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
@@ -101,7 +104,7 @@ export async function generateMetadata({ params }: MetadataProps): Promise<Metad
   return generateMeta({ doc: front })
 }
 
-const queryFrontByLocale = cache(async ({ locale }: { locale: string }) => {
+const queryFrontByLocale = unstable_cache(async ({ locale }: { locale: string }) => {
   const draftModeData = await draftMode()
   const payload = await getPayloadHMR({ config: configPromise })
 
@@ -114,10 +117,15 @@ const queryFrontByLocale = cache(async ({ locale }: { locale: string }) => {
   })
 
   return result.docs?.[0] || null
+},
+['front'],
+{
+  tags: ['front'],
+  revalidate,
 })
 
 
-const queryServicesByLocale = cache(async ({ locale }: { locale: string }) => {
+const queryServicesByLocale = unstable_cache(async ({ locale }: { locale: string }) => {
   const draftModeData = await draftMode()
   const payload = await getPayloadHMR({ config: configPromise })
 
@@ -129,10 +137,15 @@ const queryServicesByLocale = cache(async ({ locale }: { locale: string }) => {
   })
 
   return result.docs || null
+},
+['services'],
+{
+  tags: ['services'],
+  revalidate,
 })
 
 
-const queryProjectsByLocale = cache(async ({ locale }: { locale: string }) => {
+const queryProjectsByLocale = unstable_cache(async ({ locale }: { locale: string }) => {
   const draftModeData = await draftMode()
   const payload = await getPayloadHMR({ config: configPromise })
 
@@ -144,10 +157,15 @@ const queryProjectsByLocale = cache(async ({ locale }: { locale: string }) => {
   })
 
   return result.docs || null
+},
+['projects'],
+{
+  tags: ['projects'],
+  revalidate,
 })
 
 
-const queryTestimonialsByLocale = cache(async ({ locale }: { locale: string }) => {
+const queryTestimonialsByLocale = unstable_cache(async ({ locale }: { locale: string }) => {
   const draftModeData = await draftMode()
   const payload = await getPayloadHMR({ config: configPromise })
 
@@ -159,9 +177,14 @@ const queryTestimonialsByLocale = cache(async ({ locale }: { locale: string }) =
   })
 
   return result.docs || null
+},
+['testimonials'],
+{
+  tags: ['testimonials'],
+  revalidate,
 })
 
-const querySkillsByLocale = cache(async ({ locale }: { locale: string }) => {
+const querySkillsByLocale = unstable_cache(async ({ locale }: { locale: string }) => {
   const draftModeData = await draftMode()
   const payload = await getPayloadHMR({ config: configPromise })
 
@@ -173,10 +196,15 @@ const querySkillsByLocale = cache(async ({ locale }: { locale: string }) => {
   })
 
   return result.docs || null
+},
+['skills'],
+{
+  tags: ['skills'],
+  revalidate,
 })
 
 
-const queryCategoriesByLocale = cache(async ({ locale }: { locale: string }) => {
+const queryCategoriesByLocale = unstable_cache(async ({ locale }: { locale: string }) => {
   const draftModeData = await draftMode()
   const payload = await getPayloadHMR({ config: configPromise })
 
@@ -188,4 +216,9 @@ const queryCategoriesByLocale = cache(async ({ locale }: { locale: string }) => 
   })
 
   return result.docs || null
+},
+['categories'],
+{
+  tags: ['categories'],
+  revalidate,
 })

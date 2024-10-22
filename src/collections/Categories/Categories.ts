@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
+import { revalidateCategory } from './hooks/revalidateCategory'
 
 const Categories: CollectionConfig = {
   slug: 'categories',
@@ -21,6 +22,9 @@ const Categories: CollectionConfig = {
       required: true,
     },
   ],
+  hooks: {
+    afterChange: [revalidateCategory],
+  }
 }
 
 export default Categories

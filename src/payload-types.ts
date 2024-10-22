@@ -479,8 +479,11 @@ export interface Skill {
     | 'Rocket'
     | 'Target'
     | 'Headphones';
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

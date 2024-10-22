@@ -1,7 +1,7 @@
 import type { CollectionAfterChangeHook } from 'payload'
-import { revalidatePath } from 'next/cache'
+import {  revalidateTag } from 'next/cache'
 import type { Front } from '../../../payload-types'
-import { routing } from '@/i18n/routing'
+
 
 export const revalidateFront: CollectionAfterChangeHook<Front> = ({
   doc,
@@ -9,24 +9,16 @@ export const revalidateFront: CollectionAfterChangeHook<Front> = ({
   req: { payload },
 }) => {
   if (doc._status === 'published') {
-    routing.locales.forEach(locale => {
-  const path = `/${locale}`
-
-
-      payload.logger.info(`Revalidating front at path: ${path}`)
-      revalidatePath(path)
-    })
+    const tag = `front`
+    payload.logger.info(`Revalidating tag: ${tag}`)
+    revalidateTag(tag)
   }
 
   // If the front was previously published, we need to revalidate the old path
   if (previousDoc?._status === 'published' && doc._status !== 'published') {
-    routing.locales.forEach(locale => {
-      const oldPath =  `/${locale}`
-
-
-      payload.logger.info(`Revalidating old front at path: ${oldPath}`)
-      revalidatePath(oldPath)
-    })
+    const Oldtag = `front`
+    payload.logger.info(`Revalidating tag: ${Oldtag}`)
+    revalidateTag(Oldtag)
   }
 
   return doc

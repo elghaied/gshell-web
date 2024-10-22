@@ -36,7 +36,7 @@ import { Fronts } from './collections/Fronts'
 import { Socials } from './Socials/config'
 import { locales } from './i18n/locales'
 import Testimonials from './collections/Testimonials'
-import Skills from './collections/Skills'
+import Skills from './collections/Skills/Skills'
 import { Front } from './payload-types'
 
 const filename = fileURLToPath(import.meta.url)

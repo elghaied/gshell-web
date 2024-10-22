@@ -1,7 +1,10 @@
 import type { CollectionConfig } from 'payload'
 
-import { anyone } from '../access/anyone'
-import { authenticated } from '../access/authenticated'
+import { anyone } from '../../access/anyone'
+import { authenticated } from '../../access/authenticated'
+import { revalidateFront } from '../Fronts/hooks/revalidateFront'
+import { slugField } from '@/fields/slug'
+import { revalidateSkill } from './hooks/revalidateSkill'
 
 const Skills: CollectionConfig = {
   slug: 'skills',
@@ -48,8 +51,20 @@ const Skills: CollectionConfig = {
       ],
       defaultValue: 'Code',
     },
-
+    ...slugField(),
   ],
+
+  hooks: {
+    afterChange: [revalidateSkill],
+  },
+  versions: {
+    drafts: {
+      autosave: {
+        interval: 100, // We set this interval for optimal live preview
+      },
+    },
+    maxPerDoc: 50,
+  },
 }
 
 export default Skills
