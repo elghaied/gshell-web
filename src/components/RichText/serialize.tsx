@@ -1,8 +1,6 @@
-
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '@/components/Link'
-import { DefaultNodeTypes } from '@payloadcms/richtext-lexical'
-
+import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
 
 import {
   IS_BOLD,
@@ -14,8 +12,8 @@ import {
   IS_UNDERLINE,
 } from './nodeFormat'
 
-
 export type NodeTypes = DefaultNodeTypes
+
 type Props = {
   nodes: NodeTypes[]
 }
@@ -85,84 +83,82 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
 
         const serializedChildren = 'children' in node ? serializedChildrenFn(node) : ''
 
-
-          switch (node.type) {
-            case 'linebreak': {
-              return <br className="col-start-2" key={index} />
-            }
-            case 'paragraph': {
+        switch (node.type) {
+          case 'linebreak': {
+            return <br className="col-start-2" key={index} />
+          }
+          case 'paragraph': {
+            return (
+              <p className="col-start-2" key={index}>
+                {serializedChildren}
+              </p>
+            )
+          }
+          case 'heading': {
+            const Tag = node?.tag
+            return (
+              <Tag className="col-start-2" key={index}>
+                {serializedChildren}
+              </Tag>
+            )
+          }
+          case 'list': {
+            const Tag = node?.tag
+            return (
+              <Tag className="list col-start-2" key={index}>
+                {serializedChildren}
+              </Tag>
+            )
+          }
+          case 'listitem': {
+            if (node?.checked != null) {
               return (
-                <p className="col-start-2" key={index}>
-                  {serializedChildren}
-                </p>
-              )
-            }
-            case 'heading': {
-              const Tag = node?.tag
-              return (
-                <Tag className="col-start-2" key={index}>
-                  {serializedChildren}
-                </Tag>
-              )
-            }
-            case 'list': {
-              const Tag = node?.tag
-              return (
-                <Tag className="list col-start-2" key={index}>
-                  {serializedChildren}
-                </Tag>
-              )
-            }
-            case 'listitem': {
-              if (node?.checked != null) {
-                return (
-                  <li
-                    aria-checked={node.checked ? 'true' : 'false'}
-                    className={` ${node.checked ? '' : ''}`}
-                    key={index}
-                    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
-                    role="checkbox"
-                    tabIndex={-1}
-                    value={node?.value}
-                  >
-                    {serializedChildren}
-                  </li>
-                )
-              } else {
-                return (
-                  <li key={index} value={node?.value}>
-                    {serializedChildren}
-                  </li>
-                )
-              }
-            }
-            case 'quote': {
-              return (
-                <blockquote className="col-start-2" key={index}>
-                  {serializedChildren}
-                </blockquote>
-              )
-            }
-            case 'link': {
-              const fields = node.fields
-
-              return (
-                <CMSLink
+                <li
+                  aria-checked={node.checked ? 'true' : 'false'}
+                  className={` ${node.checked ? '' : ''}`}
                   key={index}
-                  newTab={Boolean(fields?.newTab)}
-                  reference={fields.doc as any}
-                  type={fields.linkType === 'internal' ? 'reference' : 'custom'}
-                  url={fields.url}
+                  // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+                  role="checkbox"
+                  tabIndex={-1}
+                  value={node?.value}
                 >
                   {serializedChildren}
-                </CMSLink>
+                </li>
+              )
+            } else {
+              return (
+                <li key={index} value={node?.value}>
+                  {serializedChildren}
+                </li>
               )
             }
+          }
+          case 'quote': {
+            return (
+              <blockquote className="col-start-2" key={index}>
+                {serializedChildren}
+              </blockquote>
+            )
+          }
+          case 'link': {
+            const fields = node.fields
 
-            default:
-              return null
+            return (
+              <CMSLink
+                key={index}
+                newTab={Boolean(fields?.newTab)}
+                reference={fields.doc as any}
+                type={fields.linkType === 'internal' ? 'reference' : 'custom'}
+                url={fields.url}
+              >
+                {serializedChildren}
+              </CMSLink>
+            )
           }
 
+          default:
+            return null
+        }
       })}
     </Fragment>
   )
