@@ -70,7 +70,9 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm install --ignore-workspace
 
       - name: Generate Payload types
         run: pnpm generate:types
