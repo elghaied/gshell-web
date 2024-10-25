@@ -54,8 +54,8 @@ export const AdminBar: React.FC<{
           cmsURL={process.env.NEXT_PUBLIC_SERVER_URL}
           collection={collection}
           collectionLabels={{
-            plural: collectionLabels[collection]?.plural || 'Fronts',
-            singular: collectionLabels[collection]?.singular || 'Front',
+            plural: collectionLabels[collection]?.plural || 'Pages',
+            singular: collectionLabels[collection]?.singular || 'Page',
           }}
           logo={<Title />}
           onAuthChange={onAuthChange}

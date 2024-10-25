@@ -1,5 +1,5 @@
 import React from 'react'
-import { getLocale, getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations, setRequestLocale } from 'next-intl/server'
 import GButton from '@/components/GButton'
 import { Egg } from 'lucide-react'
 
@@ -7,6 +7,7 @@ import { Egg } from 'lucide-react'
 
 export default async function NotFound() {
   const currentLocale = await getLocale()
+  setRequestLocale(currentLocale);
   const url = currentLocale === 'en' ? '/' : `/${currentLocale}`
   const t = await getTranslations('NotFound')
 

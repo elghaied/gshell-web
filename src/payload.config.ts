@@ -43,7 +43,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const generateTitle: GenerateTitle<Front> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title ? `${doc.title} | Gshell` : 'Gshell'
 }
 
 const generateURL: GenerateURL<Front> = ({ doc }) => {
@@ -55,7 +55,10 @@ const generateURL: GenerateURL<Front> = ({ doc }) => {
 export default buildConfig({
   admin: {
     meta:{
+
+      title: 'Admin Panel',
       description: 'Gshell dashboard',
+      titleSuffix: '| Gshell',
       icons: [
         {
           rel: 'icon',

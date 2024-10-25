@@ -14,13 +14,9 @@ jobs:
   test:
     name: Build and Lint
     runs-on: ubuntu-latest
-    services:
-      mongodb:
-        image: mongo:6
-        ports:
-          - 27017:27017
+
     env:
-      DATABASE_URI: mongodb://localhost:27017/gshell-web-test
+      DATABASE_URI: ${{ secrets.DATABASE_URI }}
       PAYLOAD_PUBLIC_SERVER_URL: http://localhost:3000
       NEXT_PUBLIC_SERVER_URL: http://localhost:3000
       NEXT_PUBLIC_IS_LIVE: false

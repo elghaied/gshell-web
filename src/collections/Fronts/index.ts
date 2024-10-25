@@ -15,7 +15,9 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 
-import { revalidateTag } from 'next/cache'
+import { revalidateAfterChange } from '@/hooks/revalidateAfterChange'
+import { revalidateAfterDelete } from '@/hooks/revalidateAfterDelete'
+
 
 
 export const Fronts: CollectionConfig = {
@@ -29,18 +31,20 @@ export const Fronts: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data }) => {
+      url: ({ data,locale }) => {
         const path = generatePreviewPath({
           slug: typeof data?.slug === 'string' ? data.slug : '',
           collection: 'fronts',
+          locale: locale?.code,
         })
         return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
       },
     },
-    preview: (data) =>
+    preview: (data,locale) =>
       generatePreviewPath({
         slug: typeof data?.slug === 'string' ? data.slug : '',
         collection: 'fronts',
+        locale : locale?.locale,
       }),
     useAsTitle: 'title',
   },
@@ -257,8 +261,8 @@ export const Fronts: CollectionConfig = {
     ...slugField(),
   ],
   hooks: {
-    afterChange: [()=> revalidateTag('fronts')],
-    afterDelete: [ () => revalidateTag('fronts') ],
+    afterChange: [revalidateAfterChange],
+    afterDelete: [ revalidateAfterDelete ],
     beforeChange: [populatePublishedAt],
   },
   versions: {

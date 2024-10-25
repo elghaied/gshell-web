@@ -4,8 +4,8 @@ import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
 
 import { slugField } from '@/fields/slug'
-
-import { revalidateTag } from 'next/cache'
+import { revalidateAfterChange } from '@/hooks/revalidateAfterChange'
+import { revalidateAfterDelete } from '@/hooks/revalidateAfterDelete'
 
 const Skills: CollectionConfig = {
   slug: 'skills',
@@ -68,8 +68,8 @@ const Skills: CollectionConfig = {
   ],
 
   hooks: {
-    afterChange: [() => revalidateTag('skills')],
-    afterDelete: [() => revalidateTag('skills')],
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
   },
   versions: {
     drafts: {

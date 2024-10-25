@@ -5,7 +5,8 @@ import { authenticated } from '../../access/authenticated'
 import { slugField } from '@/fields/slug'
 
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
-import { revalidateTag } from 'next/cache'
+import { revalidateAfterChange } from '@/hooks/revalidateAfterChange'
+import { revalidateAfterDelete } from '@/hooks/revalidateAfterDelete'
 
 const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -99,8 +100,8 @@ const Testimonials: CollectionConfig = {
     ...slugField(),
   ],
   hooks: {
-    afterChange: [()=> revalidateTag('testimonials')],
-    afterDelete: [ () => revalidateTag('testimonials') ],
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
     beforeChange: [populatePublishedAt],
   },
   versions: {

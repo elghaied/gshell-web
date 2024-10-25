@@ -1,17 +1,7 @@
 import type { CollectionConfig } from 'payload'
-
-import {
-  FixedToolbarFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
-
+import { FixedToolbarFeature, InlineToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
-
-
-
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -26,7 +16,11 @@ export const Media: CollectionConfig = {
       name: 'alt',
       type: 'text',
       required: true,
-      localized:true
+      localized: true,
+      validate: (value) => {
+        if (value?.length > 125) return 'Alt text must be less than 125 characters'
+        return true
+      },
     },
     {
       name: 'caption',
@@ -37,61 +31,99 @@ export const Media: CollectionConfig = {
         },
       }),
     },
+    {
+      name: 'focalPoint',
+      type: 'point',
+      label: 'Focal Point',
+    },
   ],
   upload: {
     disableLocalStorage: true,
-    mimeTypes: ['image/*'],
+    mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
+    formatOptions: {
+      format: 'webp',  // Convert all uploads to WebP
+      options: {
+        quality: 85,
+        effort: 4,
+      },
+    },
     imageSizes: [
       // Projects images - aspect ratio 1.23:1 (401x327)
       {
+        name: 'projectOriginal',
         width: 401,
         height: 327,
         crop: 'center',
-        name: 'projectOriginal',
+        formatOptions: {
+          format: 'webp',
+          options: { quality: 90 }
+        },
       },
       {
-        width: 300,
-        height: Math.round(300 * (327 / 401)), // Keeping the ratio of 1.23:1 for smaller sizes
-        crop: 'center',
         name: 'projectSmall',
+        width: 300,
+        height: Math.round(300 * (327 / 401)),
+        crop: 'center',
+        formatOptions: {
+          format: 'webp',
+          options: { quality: 85 }
+        },
       },
       {
+        name: 'projectThumbnail',
         width: 200,
         height: Math.round(200 * (327 / 401)),
         crop: 'center',
-        name: 'projectThumbnail',
+        formatOptions: {
+          format: 'webp',
+          options: { quality: 80 }
+        },
       },
       {
+        name: 'projectMobile',
         width: 150,
         height: Math.round(150 * (327 / 401)),
         crop: 'center',
-        name: 'projectMobile',
+        formatOptions: {
+          format: 'webp',
+          options: { quality: 75 }
+        },
       },
-
-      // Social Media SEO - typical OpenGraph aspect ratio of 1.91:1
+      // Social Media SEO
       {
+        name: 'socialCardLarge',
         width: 1200,
         height: 627,
         crop: 'center',
-        name: 'socialCardLarge',
+        formatOptions: {
+          format: 'webp',
+          options: { quality: 85 }
+        },
       },
       {
-        width: 600,
-        height: 314,
+        name: 'projectBlur',
+        width: 50,
+        height: Math.round(50 * (327 / 401)),
         crop: 'center',
-        name: 'socialCardMedium',
-      },
-      {
-        width: 300,
-        height: 157,
-        crop: 'center',
-        name: 'socialCardSmall',
+        formatOptions: {
+          format: 'webp',
+          options: { quality: 30 }
+        },
       },
     ],
-    resizeOptions: {
-      width: 200,
-      height: 200,
-      position: 'center',
-    },
+    focalPoint: true,
+    adminThumbnail: 'projectThumbnail',
+    filesRequiredOnCreate: true,
+
   },
+  hooks: {
+    beforeChange: [
+      ({ req, data }) => {
+        if (!data.alt) {
+          data.alt = data.filename // Fallback alt text if none provided
+        }
+        return data
+      }
+    ]
+  }
 }

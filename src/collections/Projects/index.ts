@@ -4,8 +4,8 @@ import { anyone } from '../../access/anyone'
 import { authenticated } from '../../access/authenticated'
 import { slugField } from '@/fields/slug'
 import { populatePublishedAt } from '@/hooks/populatePublishedAt'
-
-import { revalidateTag } from 'next/cache'
+import { revalidateAfterChange } from '@/hooks/revalidateAfterChange'
+import { revalidateAfterDelete } from '@/hooks/revalidateAfterDelete'
 
 const Projects: CollectionConfig = {
   slug: 'projects',
@@ -94,8 +94,8 @@ const Projects: CollectionConfig = {
     ...slugField(),
   ],
   hooks: {
-    afterChange: [()=>  revalidateTag('projects')],
-    afterDelete: [ () => revalidateTag('projects') ],
+    afterChange: [revalidateAfterChange],
+    afterDelete: [ revalidateAfterDelete ],
     beforeChange: [populatePublishedAt],
   },
   versions: {

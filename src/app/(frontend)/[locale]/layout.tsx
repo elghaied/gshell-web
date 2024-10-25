@@ -1,7 +1,4 @@
 import type { Metadata } from 'next'
-import { cn } from 'src/utilities/cn'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 import React from 'react'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
@@ -12,27 +9,84 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import './globals.css'
 import { draftMode } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
-import { Inter, Poppins } from 'next/font/google'
+import { getMessages, setRequestLocale, unstable_setRequestLocale } from 'next-intl/server'
 import localFont from 'next/font/local'
 
 import SvgPattern from '@/components/BackgroundPattern'
+import { AdminBar } from '@/components/AdminBar'
+import { routing } from '@/i18n/routing'
+import { notFound } from 'next/navigation'
 export function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'ar' }]
 }
 
 
 // Load the fonts with custom weights, styles, etc.
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+const inter = localFont({
+  src:[
+    {
+      path: '../../../../public/fonts/inter-v18-latin-regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/inter-v18-latin-500.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/inter-v18-latin-600.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/inter-v18-latin-700.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/inter-v18-latin-800.woff2',
+      weight: '800',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/inter-v18-latin-900.woff2',
+      weight: '900',
+      style: 'normal',
+    }
+
+  ],
+
+
   variable: '--font-inter', // Optional: If you use CSS variables
   display: 'swap',
 })
 
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+const poppins = localFont({
+
+  src:[
+    {
+      path: '../../../../public/fonts/poppins-v21-latin-regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/poppins-v21-latin-500.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/poppins-v21-latin-600.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../../../public/fonts/poppins-v21-latin-700.woff2',
+      weight: '700',
+      style: 'normal',
+    }
+  ],
+
   variable: '--font-poppins', // Optional: If you use CSS variables
   display: 'swap',
 })
@@ -82,14 +136,17 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   const resolvedParams = await params
   const locale = resolvedParams.locale
 
-  unstable_setRequestLocale(locale)
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
 
-  const draftModeData = await draftMode()
+
+  const { isEnabled } = await draftMode()
   const messages = await getMessages()
-
+  setRequestLocale(locale);
   return (
     <html
-      className={cn(GeistSans.variable, GeistMono.variable)}
+
       lang={locale}
       suppressHydrationWarning
     >
@@ -101,6 +158,11 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       <body className={` ${locale ==='ar' ? beiruti.className : inter.className} overflow-x-hidden relative`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
+          <AdminBar
+            adminBarProps={{
+              preview: isEnabled,
+            }}
+          />
             <LivePreviewListener />
             <Header />
             <div id="content-wrapper" className="relative ">
@@ -116,7 +178,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://payloadcms.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://gshell.fr'),
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
