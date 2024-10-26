@@ -1,57 +1,83 @@
-# Use Node.js 20 as the base image
-FROM node:20.9.0-alpine AS base
-
-# Install pnpm
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Files needed for installing dependencies
-COPY package.json pnpm-lock.yaml ./
-
-# Install dependencies
-RUN pnpm install --no-frozen-lockfile
-RUN pnpm install --ignore-workspace
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-
-# Copy dependencies and source code
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Environment variables needed for build
-ENV NODE_ENV=production
-ENV PAYLOAD_CONFIG_PATH=src/payload.config.ts
+# Build-time arguments
+ARG REVALIDATION_KEY
+ARG PAYLOAD_SECRET
+ARG NEXT_PRIVATE_DRAFT_SECRET
+ARG NEXT_PRIVATE_REVALIDATION_KEY
+ARG PAYLOAD_PUBLIC_DRAFT_SECRET
 
-# Generate Payload types and build
-RUN pnpm generate:types
-RUN pnpm build
+
+
+# Environment variables needed at build time
+
+ENV NEXT_PUBLIC_IS_LIVE=""
+ENV NEXT_PUBLIC_SERVER_URL=""
+ENV PAYLOAD_PUBLIC_SERVER_URL=""
+ENV PAYLOAD_CONFIG_PATH=src/payload.config.ts
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN \
+  if [ -f yarn.lock ]; then yarn run build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV=production
+# Runtime environment variables
+ENV DATABASE_URI=""
+# ENV PAYLOAD_SECRET=""
 ENV PAYLOAD_CONFIG_PATH=src/payload.config.ts
+# ENV NEXT_PRIVATE_DRAFT_SECRET=""
+# ENV NEXT_PRIVATE_REVALIDATION_KEY=""
+# ENV PAYLOAD_PUBLIC_DRAFT_SECRET=""
+ENV PAYLOAD_PUBLIC_SERVER_URL=""
+# ENV REVALIDATION_KEY=""
+ENV S3_ACCESS_KEY_ID=""
+ENV S3_BUCKET=""
+ENV S3_ENDPOINT=""
+ENV S3_REGION=""
+ENV S3_SECRET_ACCESS_KEY=""
 
-# Copy necessary files for production
-COPY package.json pnpm-lock.yaml ./
-COPY --from=builder /app/.next ./.next
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/src ./src
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Create media directory for local storage (if needed as fallback)
-RUN mkdir -p media
-VOLUME /app/media
+USER nextjs
 
 EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-# Start the server using your dev:prod script
-CMD ["pnpm", "start"]
+CMD ["node", "server.js"]

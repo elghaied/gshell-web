@@ -96,13 +96,8 @@
 html {
   opacity: 0;
 }
-html {
-  --font-primary: var(--font-inter);
-  --font-secondary: var(--font-poppins);
-}
-html[lang="ar"] {
-  --font-primary: var(--font-beiruti);
-}
+
+
 html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;

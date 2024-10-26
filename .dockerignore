@@ -30,7 +30,7 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
-
+.git
 # Test coverage
 coverage
 

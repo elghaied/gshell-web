@@ -16,6 +16,7 @@ import SvgPattern from '@/components/BackgroundPattern'
 import { AdminBar } from '@/components/AdminBar'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
+import { cn } from '@/utilities/cn'
 export function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'fr' }, { locale: 'ar' }]
 }
@@ -155,7 +156,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body className={` ${locale ==='ar' ? beiruti.className : inter.className} overflow-x-hidden relative`}>
+      <body className={cn(`${locale ==='ar' ? beiruti.className : inter.className } ${poppins.className}`)}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
           <AdminBar

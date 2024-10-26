@@ -7,13 +7,19 @@ export const revalidateAfterChange: CollectionAfterChangeHook = ({
   doc,
   req: { payload },
 }) => {
-  if (doc._status === 'published') {
+  if(collection.slug === 'categories') {
     payload.logger.info(`Revalidating ${collection.slug} with tag: ${collection.slug}`)
     revalidateTag(collection.slug)
+  }else{
+    if (doc._status === 'published') {
+      payload.logger.info(`Revalidating ${collection.slug} with tag: ${collection.slug}`)
+      revalidateTag(collection.slug)
+    }
+    if (previousDoc?._status === 'published' && doc._status !== 'published') {
+      payload.logger.info(`Revalidating unpublished ${collection.slug} with tag: ${collection.slug}`)
+      revalidateTag(collection.slug)
+    }
   }
-  if (previousDoc?._status === 'published' && doc._status !== 'published') {
-    payload.logger.info(`Revalidating unpublished ${collection.slug} with tag: ${collection.slug}`)
-    revalidateTag(collection.slug)
-  }
+
   return doc
 }

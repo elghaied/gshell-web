@@ -41,14 +41,14 @@ export const Media: CollectionConfig = {
     disableLocalStorage: true,
     mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
     formatOptions: {
-      format: 'webp',  // Convert all uploads to WebP
+      format: 'webp',
       options: {
         quality: 85,
         effort: 4,
       },
     },
     imageSizes: [
-      // Projects images - aspect ratio 1.23:1 (401x327)
+
       {
         name: 'projectOriginal',
         width: 401,
@@ -120,7 +120,7 @@ export const Media: CollectionConfig = {
     beforeChange: [
       ({ req, data }) => {
         if (!data.alt) {
-          data.alt = data.filename // Fallback alt text if none provided
+          data.alt = data.filename
         }
         return data
       }
