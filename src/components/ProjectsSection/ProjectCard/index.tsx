@@ -77,9 +77,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card className="w-[280px] sm:w-[340px] lg:w-[497px] h-full overflow-hidden bg-white dark:bg-[#212121] shadow-custom flex flex-col pb-8">
       <CardHeader className="p-3 md:p-6 bg-gray-50 dark:bg-[#3E3E3E] flex-shrink-0">
-        {mediaImage && url && (
+        {mediaImage && (
           <Link
-            href={url}
+            href={url || ''}
             target="_blank"
             rel="noopener noreferrer"
             className="block relative w-full group"
