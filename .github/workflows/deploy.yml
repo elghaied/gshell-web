@@ -40,6 +40,8 @@ jobs:
             NEXT_PRIVATE_DRAFT_SECRET=${{ secrets.NEXT_PRIVATE_DRAFT_SECRET }}
             NEXT_PRIVATE_REVALIDATION_KEY=${{ secrets.NEXT_PRIVATE_REVALIDATION_KEY }}
             PAYLOAD_PUBLIC_DRAFT_SECRET=${{ secrets.PAYLOAD_PUBLIC_DRAFT_SECRET }}
+            NEXT_PUBLIC_SERVER_URL=${{ secrets.NEXT_PUBLIC_SERVER_URL }}
+            PAYLOAD_PUBLIC_SERVER_URL=${{ secrets.PAYLOAD_PUBLIC_SERVER_URL }}
 
       - name: Deploy to Coolify
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
