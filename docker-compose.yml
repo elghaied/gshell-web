@@ -38,8 +38,13 @@ services:
       - S3_BUCKET=${S3_BUCKET:-media}
       - S3_REGION=us-east-1
       - S3_FORCE_PATH_STYLE=true
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
       - HOSTNAME=0.0.0.0
       - PORT=3000
+
     depends_on:
       - mongodb
       - minio

@@ -20,6 +20,7 @@
   "dependencies": {
     "@fluid-tailwind/tailwind-merge": "^0.0.3",
     "@payloadcms/db-mongodb": "3.0.0-beta.119",
+    "@payloadcms/email-nodemailer": "3.0.0-beta.119",
     "@payloadcms/live-preview-react": "3.0.0-beta.119",
     "@payloadcms/next": "3.0.0-beta.119",
     "@payloadcms/plugin-form-builder": "3.0.0-beta.119",

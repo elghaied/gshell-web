@@ -38,7 +38,7 @@ import { locales } from './i18n/locales'
 import Testimonials from './collections/Testimonials'
 import Skills from './collections/Skills/Skills'
 import { Front } from './payload-types'
-
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -250,4 +250,17 @@ export default buildConfig({
     supportedLanguages: { en, ar, fr },
     fallbackLanguage: 'en',
   },
+  email: nodemailerAdapter({
+    defaultFromAddress: 'noreply@gshell.fr',
+    defaultFromName: 'contactform',
+    // Nodemailer transportOptions
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    },
+  }),
 })
