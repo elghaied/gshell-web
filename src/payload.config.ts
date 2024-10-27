@@ -251,9 +251,10 @@ export default buildConfig({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       secure: process.env.SMTP_SECURE,
+      requireTLS: true, // Forces STARTTLS
       tls: {
-        ciphers: 'SSLv3',
-        rejectUnauthorized: false // Be careful with this in production
+        minVersion: 'TLSv1.2', // Enforce minimum TLS 1.2
+        maxVersion: 'TLSv1.3',
       },
       auth: {
         user: process.env.SMTP_USER,
