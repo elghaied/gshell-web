@@ -257,10 +257,15 @@ export default buildConfig({
     transportOptions: {
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
-      secure: true,
+      secure: process.env.SMTP_SECURE,
+      pool: process.env.SMTP_POOL,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
+      },
+      tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: process.env.SMTP_TLS,
       },
     },
   }),
