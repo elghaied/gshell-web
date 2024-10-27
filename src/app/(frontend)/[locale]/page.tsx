@@ -28,11 +28,12 @@ import { SkillsSection } from '@/components/SkillsSection'
 import { unstable_cache } from 'next/cache'
 import { setRequestLocale } from 'next-intl/server'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-static'
 export const revalidate = 86400
 
 export async function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
+  // return routing.locales.map((locale) => ({ locale }))
+  return []
 }
 
 
