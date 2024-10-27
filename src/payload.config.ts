@@ -39,6 +39,8 @@ import Testimonials from './collections/Testimonials'
 import Skills from './collections/Skills/Skills'
 import { Front } from './payload-types'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import nodemailer from 'nodemailer'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -54,8 +56,7 @@ const generateURL: GenerateURL<Front> = ({ doc }) => {
 
 export default buildConfig({
   admin: {
-    meta:{
-
+    meta: {
       title: 'Admin Panel',
       description: 'Gshell dashboard',
       titleSuffix: '| Gshell',
@@ -71,18 +72,14 @@ export default buildConfig({
           url: '/favicon.svg',
         },
       ],
-
-
     },
     components: {
       graphics: {
         Logo: {
           path: '/components/WebLogo/index.tsx#WebLogo',
-
         },
         Icon: {
           path: '/components/MiniLogo/index.tsx#MiniLogo',
-
         },
       },
     },
@@ -146,7 +143,6 @@ export default buildConfig({
   }),
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
-
   }),
   collections: [
     Media,
@@ -222,7 +218,6 @@ export default buildConfig({
     s3Storage({
       collections: {
         ['media']: true,
-
       },
       bucket: process.env.S3_BUCKET!,
       config: {
@@ -231,8 +226,8 @@ export default buildConfig({
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
         },
         region: process.env.S3_REGION,
-        forcePathStyle:true,
-        endpoint: process.env.S3_ENDPOINT
+        forcePathStyle: true,
+        endpoint: process.env.S3_ENDPOINT,
       },
     }),
   ],
@@ -253,20 +248,14 @@ export default buildConfig({
   email: nodemailerAdapter({
     defaultFromAddress: 'noreply@gshell.fr',
     defaultFromName: 'contactform',
-    // Nodemailer transportOptions
-    transportOptions: {
+    transport: nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       secure: process.env.SMTP_SECURE,
-      pool: process.env.SMTP_POOL,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
-      tls: {
-        // do not fail on invalid certs
-        rejectUnauthorized: process.env.SMTP_TLS,
-      },
-    },
+    }),
   }),
 })
