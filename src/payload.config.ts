@@ -39,7 +39,6 @@ import Testimonials from './collections/Testimonials'
 import Skills from './collections/Skills/Skills'
 import { Front } from './payload-types'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
-import nodemailer from 'nodemailer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
