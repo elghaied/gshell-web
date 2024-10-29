@@ -248,15 +248,13 @@ export default buildConfig({
   email: nodemailerAdapter({
     defaultFromAddress: 'noreply@gshell.fr',
     defaultFromName: 'contactform',
-    // Nodemailer transportOptions
-    transportOptions:{
-      host: process.env.SMTP_HOST,
-      port:  process.env.SMTP_PORT,
-      secure: process.env.SMTP_SECURE,
-      tls: { rejectUnauthorized: process.env.SMTP_TLS === 'true' },
+
+    transportOptions: {
+      host: process.env.SMTP_HOST!,
+      port: 587,
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: process.env.SMTP_USER!,
+        pass: process.env.SMTP_PASS!,
       },
     },
   }),
