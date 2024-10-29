@@ -39,6 +39,8 @@ import Testimonials from './collections/Testimonials'
 import Skills from './collections/Skills/Skills'
 import { Front } from './payload-types'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import nodemailer from 'nodemailer'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -247,15 +249,11 @@ export default buildConfig({
     defaultFromAddress: 'noreply@gshell.fr',
     defaultFromName: 'contactform',
     // Nodemailer transportOptions
-    transportOptions: {
+    transportOptions:{
       host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
+      port:  process.env.SMTP_PORT,
       secure: process.env.SMTP_SECURE,
-      requireTLS: true, // Forces STARTTLS
-      tls: {
-        minVersion: 'TLSv1.2', // Enforce minimum TLS 1.2
-        maxVersion: 'TLSv1.3',
-      },
+      tls: { rejectUnauthorized: process.env.SMTP_TLS === 'true' },
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
