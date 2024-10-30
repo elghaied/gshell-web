@@ -71,7 +71,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header, locale }) =>
       dir={isRTL ? 'rtl' : 'ltr'}
       data-theme={headerTheme || 'light'}
     >
-      <Link href="/" className="flex items-center">
+      <Link href="/" aria-label="Home" className="flex items-center">
         <Logo className="w-24 md:w-32 lg:w-40" />
       </Link>
       <HeaderNav header={header} />

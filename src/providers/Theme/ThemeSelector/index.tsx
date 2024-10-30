@@ -37,15 +37,15 @@ export const ThemeSelector: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-       className="group bg-smoke text-[#212121] transition-all ease-in-out duration-200 justify-center flex items-center gap-2 rounded-[12px] w-[148px] h-[56px] hover:bg-venetian hover:text-white"
+       className="group bg-smoke text-[#212121] transition-all ease-in-out duration-200 justify-center flex items-center gap-2 rounded-[12px] p-3 min-w-[148px] h-[56px] hover:bg-venetian hover:text-white"
     >
       {currentTheme === 'light' ? (
-         <Moon  className='w-8 h-8 fill-current group-hover:fill-white'/>
+         <Moon  className='~w-6/8 ~h-6/8 fill-current group-hover:fill-white'/>
       ) : (
-         <Sun  className='w-8 h-8 fill-current group-hover:fill-white'/>
+         <Sun  className='~w-6/8 ~h-6/8 fill-current group-hover:fill-white'/>
 
       )}
-      <span className=" text-base">
+      <span className=" ~text-sm/base">
         {currentTheme === 'light' ? t('darkMode') : t('lightMode')}
       </span>
     </button>

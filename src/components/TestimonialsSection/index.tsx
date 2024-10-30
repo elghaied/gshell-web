@@ -112,7 +112,7 @@ export const TestimonialsSection: React.FC<TestimonialSectionProps> = ({
   }
 
   return (
-    <section id="testimonials" className="px-4 lg:px-8 py-12 bg-white dark:bg-black " dir={isRTL ? 'rtl' : 'ltr'}>
+    <section id="testimonials" className="px-4 lg:px-8 py-12 bg-background " dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <SectionTitle title={testimonialsSection?.sectionTitle || 'Testimonials'} />
@@ -141,15 +141,15 @@ export const TestimonialsSection: React.FC<TestimonialSectionProps> = ({
             ))}
           </div>
 
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="flex justify-center ~gap-3/4 ~mt-6/8">
             {testimonialsItems.map((_, index) => (
               <button
                 key={`controller_${index}`}
                 onClick={() => setActiveIndex(index)}
-                className={`rounded-full transition-all duration-300 h-2 lg:h-3 ${
+                className={`rounded-full transition-all duration-300 ~h-3/4 ${
                   activeIndex === index
-                    ? 'bg-venetian w-6 lg:w-8'
-                    : 'bg-[#C5C5C5] w-2 lg:w-3'
+                    ? 'bg-venetian ~w-8/10'
+                    : 'bg-[#C5C5C5] ~w-3/4'
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />

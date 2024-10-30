@@ -7,6 +7,7 @@ import {  Logo, MiniLogo, Moon, Sun } from '@/components/Logo/Logo'
 import { useTheme } from '@/providers/Theme'
 import type { Header as HeaderType } from '@/payload-types'
 import LanguageSwitcher from '../LanguagesSwitcher'
+import { ar } from 'payload/i18n/ar';
 
 
 export const MobileHeader: React.FC<{ header: HeaderType;  }> = ({ header }) => {
@@ -34,13 +35,13 @@ export const MobileHeader: React.FC<{ header: HeaderType;  }> = ({ header }) => 
 
 
 
-          <button onClick={toggleTheme} className="p-2">
+          <button onClick={toggleTheme} aria-label="Toggle dark mode" className="p-2">
             {theme === 'dark' ? <Sun className="w-6 h-6 fill-black dark:fill-white" /> : <Moon className="w-6 h-6 fill-black" />}
           </button>
-          <button onClick={toggleMenu} className="p-2">
+          <button onClick={toggleMenu} aria-label="Toggle menu" className="p-2">
             <Globe className="w-6 h-6" />
           </button>
-          <button onClick={toggleMenu} className="p-2">
+          <button onClick={toggleMenu} aria-label="Toggle menu" className="p-2">
             <Menu className="w-6 h-6" />
           </button>
         </div>

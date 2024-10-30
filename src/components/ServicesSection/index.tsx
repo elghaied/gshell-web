@@ -38,7 +38,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
   }
 
   return (
-    <section className="~py-11/28 bg-white dark:bg-black " id="services" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <section className="~py-11/28 bg-background " id="services" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <div className="text-center mb-8">
         <SectionTitle title={servicesSection?.sectionTitle || 'Our Services'} />
         <StyledTextParser text={servicesSection?.title } className={`${locale === 'ar' ? 'font-black' : ''} ~mb-4/6`} />

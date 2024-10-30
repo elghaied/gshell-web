@@ -13,6 +13,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
         return (
           <Link
             key={i}
+            aria-label={link.label}
             href={link.url}
             className="~text-xs/base no-underline font-medium transition-all duration-200 ease-in-out text-black  hover:text-venetian dark:text-white"
           >

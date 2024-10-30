@@ -108,7 +108,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   }
 
   return (
-    <section className="py-8 relative z-0 bg-white dark:bg-black " id="projects" dir={isRTL ? 'rtl' : 'ltr'}>
+    <section className="py-8 relative z-0 bg-background" id="projects" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="flex flex-col lg:flex-row justify-between">
         <div className="w-full lg:w-2/5 flex justify-center flex-col mb-8">
           <div className={`max-w-[350px] ${isRTL ? 'lg:mr-0 lg:ml-auto' : 'lg:ml-0 lg:mr-auto'}`}>
@@ -141,13 +141,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             </div>
           </div>
 
-          <div className="flex justify-center gap-2 mt-4 lg:mt-6">
+          <div className="flex justify-center ~gap-3/4 ~mt-4/6">
             {projectItems?.map((project, index) => (
               <button
                 key={`${project.id}_controller`}
                 onClick={() => setActiveIndex(index)}
-                className={`rounded-full transition-all duration-300 h-2 lg:h-3 ${
-                  activeIndex === index ? 'bg-venetian w-6 lg:w-8' : 'bg-[#C5C5C5] w-2 lg:w-3'
+                className={`rounded-full transition-all duration-300 ~h-3/4 ${
+                  activeIndex === index ? 'bg-venetian ~w-8/10' : 'bg-[#C5C5C5] ~w-3/4'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />

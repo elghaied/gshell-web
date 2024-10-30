@@ -1,4 +1,4 @@
-import { getGlobal } from '@/utilities/getGlobals'
+
 
 import Link from 'next/link'
 import React from 'react'
@@ -7,10 +7,11 @@ import type { Social } from '@/payload-types'
 
 import { getLocale } from 'next-intl/server'
 import { Facebook, Instagram, Linkedin } from 'lucide-react'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 
 export async function Socials() {
   const currentLocale = await getLocale()
-  const footer: Social = await getGlobal('socials', 1, currentLocale as 'en' | 'fr' | 'ar')
+  const footer: Social = await getCachedGlobal('socials', 1, currentLocale as 'en' | 'fr' | 'ar')()
 
   const { facebook, instagram, linkedin } = footer
 
