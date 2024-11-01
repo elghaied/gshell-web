@@ -43,7 +43,7 @@ export default function WelcomeSection({ welcome, locale }: WelcomeSectionProps)
         <p className={`${isRTL ? '~text-base/xl' : '~text-sm/base'}`}>
           {welcome?.description || 'This section is about us...'}
         </p>
-        <GButton cta="Hire me" />
+        <GButton cta={welcome?.buttonText!} />
       </div>
 
       <div
