@@ -22,6 +22,10 @@ export const Socials: GlobalConfig = {
     {
       name: 'linkedin',
       type: 'text',
+    },
+    {
+      name: 'malt',
+      type: 'text',
     }
   ],
   hooks: {

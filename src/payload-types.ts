@@ -232,6 +232,14 @@ export interface Project {
   url?: string | null;
   category: string | Category;
   technologies?: (string | Technology)[] | null;
+  publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -268,6 +276,13 @@ export interface Service {
   category: string | Category;
   technologies?: (string | Technology)[] | null;
   publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -323,6 +338,13 @@ export interface Front {
     description?: string | null;
   };
   publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -530,6 +552,14 @@ export interface Testimonial {
   occupation: string;
   content: string;
   rating: '5' | '4' | '3' | '2' | '1';
+  publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -560,6 +590,14 @@ export interface Skill {
     | 'Rocket'
     | 'Target'
     | 'Headphones';
+  publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  populatedAuthors?:
+    | {
+        id?: string | null;
+        name?: string | null;
+      }[]
+    | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -836,6 +874,14 @@ export interface ProjectsSelect<T extends boolean = true> {
   url?: T;
   category?: T;
   technologies?: T;
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -859,6 +905,13 @@ export interface ServicesSelect<T extends boolean = true> {
   category?: T;
   technologies?: T;
   publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -943,6 +996,13 @@ export interface FrontsSelect<T extends boolean = true> {
         preview?: T;
       };
   publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -959,6 +1019,14 @@ export interface TestimonialsSelect<T extends boolean = true> {
   occupation?: T;
   content?: T;
   rating?: T;
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -973,6 +1041,14 @@ export interface SkillsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   icon?: T;
+  publishedAt?: T;
+  authors?: T;
+  populatedAuthors?:
+    | T
+    | {
+        id?: T;
+        name?: T;
+      };
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
@@ -1232,6 +1308,7 @@ export interface Social {
   facebook?: string | null;
   instagram?: string | null;
   linkedin?: string | null;
+  malt?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1289,6 +1366,7 @@ export interface SocialsSelect<T extends boolean = true> {
   facebook?: T;
   instagram?: T;
   linkedin?: T;
+  malt?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
