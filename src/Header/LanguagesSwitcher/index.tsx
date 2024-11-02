@@ -4,8 +4,10 @@ import {  Link, routing } from '@/i18n/routing'
 import { useLocale } from 'next-intl'
 
 
-
-export default function LanguageSwitcher() {
+interface Props {
+  mobile?: boolean
+}
+export default function LanguageSwitcher({mobile = false}: Props) {
   const locale = useLocale()
 
 
@@ -19,8 +21,8 @@ export default function LanguageSwitcher() {
           className={`
            ~px-3/5 ~py-[.4rem]/[.6rem] rounded ~text-base/lg uppercase font-bold !font-inter flex items-center justify-center
             ${locale === lang
-              ? 'bg-black text-white dark:bg-white dark:text-black'
-              : 'text-black dark:text-white hover:text-venetian dark:hover:text-venetian'
+              ? mobile ?  'bg-white text-black ' :'bg-black text-white dark:bg-white dark:text-black'
+              : mobile ? ' text-white hover:text-venetian  ' :  'text-black dark:text-white hover:text-venetian dark:hover:text-venetian'
             }
             transition-colors duration-200 ease-in-out
           `}

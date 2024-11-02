@@ -9,9 +9,9 @@ import { getCachedGlobal } from '@/utilities/getGlobals'
 
 export async function Socials() {
   const currentLocale = await getLocale()
-  const footer: Social = await getCachedGlobal('socials', 1, currentLocale as 'en' | 'fr' | 'ar')()
+  const socials: Social = await getCachedGlobal('socials', 1, currentLocale as 'en' | 'fr' | 'ar')()
 
-  const { facebook, instagram, linkedin, malt } = footer
+  const { facebook, instagram, linkedin, malt } = socials
 
   return (
     <div className="flex gap-6">
