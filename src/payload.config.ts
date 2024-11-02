@@ -47,9 +47,9 @@ const generateTitle: GenerateTitle<Front> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Gshell` : 'Gshell'
 }
 
-const generateURL: GenerateURL<Front> = ({ doc }) => {
+const generateURL: GenerateURL<Front> = ({ doc ,req: { locale }  }) => {
   return doc?.slug
-    ? `${process.env.NEXT_PUBLIC_SERVER_URL!}/${doc.slug}`
+    ? `${process.env.NEXT_PUBLIC_SERVER_URL!}/${locale}`
     : process.env.NEXT_PUBLIC_SERVER_URL!
 }
 
