@@ -8,7 +8,6 @@ import { Badge } from '../ui/badge'
 import StyledTextParser from '../ui/StyledTextParser'
 import ErrorBoundary from './error-boundary'
 
-
 type ServicesSectionProps = {
   servicesSection: Front['servicesSection']
   servicesItems: Service[]
@@ -18,7 +17,7 @@ type ServicesSectionProps = {
 
 const ErrorFallback: React.FC<{ error: Error; resetErrorBoundary: () => void }> = ({
   error,
-  resetErrorBoundary
+  resetErrorBoundary,
 }) => {
   return (
     <div role="alert">
@@ -39,7 +38,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
   const filteredServices = useMemo(() => {
     if (!selectedCategory) return servicesItems || []
-    return (servicesItems || []).filter(service => {
+    return (servicesItems || []).filter((service) => {
       if (!service || !service.category) return false
       if (typeof service.category === 'string') {
         return service.category === selectedCategory
@@ -50,7 +49,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
   }, [servicesItems, selectedCategory])
 
   const handleCategoryClick = (categoryId: string | null) => {
-    setSelectedCategory(prev => prev === categoryId ? null : categoryId)
+    setSelectedCategory((prev) => (prev === categoryId ? null : categoryId))
   }
 
   if (!servicesItems || servicesItems.length === 0 || !categories || categories.length === 0) {
@@ -65,13 +64,22 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
         setSelectedCategory(null)
       }}
     >
-      <section className="~py-11/28 bg-background " id="services" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+      <section
+        className="~py-11/28 bg-background "
+        id="services"
+        dir={locale === 'ar' ? 'rtl' : 'ltr'}
+      >
         <div className="text-center mb-8">
           <SectionTitle title={servicesSection?.sectionTitle || 'Our Services'} />
-          <StyledTextParser text={servicesSection?.title || ''} className={`${locale === 'ar' ? 'font-black' : ''} ~mb-4/6`} />
+          <StyledTextParser
+            text={servicesSection?.title || ''}
+            className={`${locale === 'ar' ? 'font-black' : ''} ~mb-4/6`}
+          />
 
           {servicesSection?.description && (
-            <p className="mt-2 text-lg text-[#323433] dark:text-[#F8FEFB]">{servicesSection.description}</p>
+            <p className="mt-2 text-lg text-[#323433] dark:text-[#F8FEFB]">
+              {servicesSection.description}
+            </p>
           )}
         </div>
         <div className="flex justify-center ~gap-2/4 flex-wrap ~mb-4/6">
@@ -82,7 +90,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
             }`}
             onClick={() => handleCategoryClick(null)}
           >
-            All
+            {locale === 'ar' ? 'الكل' : locale === 'fr' ? 'Tout' : 'All'}{' '}
           </Badge>
           {categories?.map((category) => (
             <Badge

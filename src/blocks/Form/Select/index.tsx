@@ -14,7 +14,7 @@ import { Controller } from 'react-hook-form'
 
 import { Error } from '../Error'
 import { Width } from '../Width'
-import { ar } from 'payload/i18n/ar';
+
 
 export const Select: React.FC<
   SelectField & {
@@ -28,7 +28,7 @@ export const Select: React.FC<
 > = ({ name, control, errors, label, options, required, width }) => {
   return (
     <Width width={width}>
-      <Label htmlFor={name} aria-label={label}>{label}</Label>
+      {/* <Label htmlFor={name} aria-label={label}>{label}</Label> */}
       <Controller
         control={control}
         defaultValue=""
