@@ -37,6 +37,7 @@ export default function WelcomeSection({ welcome, locale }: WelcomeSectionProps)
       >
         <SectionTitle title={welcome?.sectionTitle || 'welcome'} />
         <StyledTextParser
+           h1={true}
           text={welcome?.title}
           className={`mb-4 md:mb-6 ${isRTL ? 'font-black ~text-5xl/8xl' : '~text-4xl/6xl font-bold'}`}
         />
