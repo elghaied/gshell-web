@@ -86,7 +86,7 @@ export default async function Page({ params: paramsPromise }: Args) {
         />
       )}
 
-      {projectsSection && (
+      {projectsSection &&  (
         <ProjectsSection
           projectSection={projectsSection}
           projectItems={projects}
@@ -94,7 +94,7 @@ export default async function Page({ params: paramsPromise }: Args) {
         />
       )}
 
-      {testimonialsSection && (
+      {testimonialsSection && testimonials.length > 0 && (
         <TestimonialsSection
           testimonialsSection={testimonialsSection}
           testimonialsItems={testimonials}
