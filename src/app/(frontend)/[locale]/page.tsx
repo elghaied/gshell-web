@@ -70,7 +70,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   } = front
 
   return (
-    <article className={`container pt-16 pb-24  ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
+    <main className={`container pt-16  ${locale === 'ar' ? 'rtl' : 'ltr'}`}>
       <PayloadRedirects disableNotFound url={url} />
 
       <WelcomeSection welcome={welcome} locale={locale} />
@@ -124,7 +124,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       {typeof layout[0].form != 'string' && (
         <FormBlock form={layout[0].form as Form} enableIntro={false} locale={locale} />
       )}
-    </article>
+    </main>
   )
 }
 
