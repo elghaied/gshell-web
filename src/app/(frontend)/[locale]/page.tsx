@@ -129,7 +129,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 
-
+//  test
 export async function generateMetadata({ params: paramsPromise }): Promise<Metadata> {
   const {locale = 'en'} = await paramsPromise
   const { isEnabled: draft } = await draftMode()
